@@ -1,9 +1,9 @@
-import {DropdownMenuItem, Sidebar, Main, Content, Layout, Logo, Title, ToggleSidebarButton, MenuItem, Header} from "./styles";
+import {DropdownMenuItem, Sidebar, Main, Content, Layout, Logo, Title, MenuItem, Header} from "./styles";
 import AuthUser from "./AuthUser";
-import {HomeOutlined, FileSearchOutlined,MessageOutlined,DesktopOutlined,SettingOutlined } from "@ant-design/icons";
+import {HomeOutlined, FileSearchOutlined,DesktopOutlined,SettingOutlined } from "@ant-design/icons";
 import { ReactNode} from "react";
 import { MenuProps, Space } from "antd";
-import LogoInsign from '../../shared/images/Logo.png'
+import LogoInsign from '../shared/images/Logo.png'
 interface Props {
   children?: ReactNode,
   title?:any
@@ -16,19 +16,14 @@ const PrivateLayout = ({ children, title }:Props) => {
       key: "0",
     }
   ];
-          // options={[
-        //   { value: "qlvt", label: "Quản lý vai trò" },
-        //   { value: "qltk", label: "Quản lý tài khoản" },
-        //   { value: "nknd", label: "Nhật ký người dùng" },
-        // ]}
   return (
     <Layout >
       <Sidebar>
         <Logo><img src={LogoInsign} className="logo Alta" alt="Alta logo" width='120px'/></Logo>
-        <MenuItem to="/Dashboard">
+        <MenuItem to="/">
         <HomeOutlined /> Trang chủ
         </MenuItem>
-        <MenuItem to="/DevicePage/Table">
+        <MenuItem to="/TicketManagement">
           <DesktopOutlined />Quản lý vé
         </MenuItem>
 
@@ -46,7 +41,7 @@ const PrivateLayout = ({ children, title }:Props) => {
           </DropdownMenuItem>
       </Sidebar>
       <Main>
-      <Header>
+        <Header>
           <Title>
             {title}
           </Title>

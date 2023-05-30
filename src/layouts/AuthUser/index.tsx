@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AuthUserForm, Bell, Mail, Signal, UserInfo} from './styles';
 import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../../../firebase/firebase-config';
-import SearchBox from '../../../components/SearchBox';
+import { storage } from '../../firebase/firebase-config';
+import SearchBox from '../../components/SearchBox';
 
 const AuthUser = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);

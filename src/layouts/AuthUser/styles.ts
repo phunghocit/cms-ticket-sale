@@ -10,7 +10,7 @@ export const UserInfo = styled.div`
 `
 export const AuthUserForm = styled.div`
   display: grid;
-  
+  /* width: 100%; */
   grid-template-columns: 3rem 1fr;
   align-items:  center;
   margin: 1rem 0;
