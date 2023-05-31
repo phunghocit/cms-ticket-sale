@@ -116,37 +116,6 @@ export const MenuItem = styled(NavLink)`
       background-color:#FF7506 !important;
     }
 `
-export const MenuItemLogout = styled(NavLink)`
-    backdrop-filter: blur(25px) saturate(200%);
-    -webkit-backdrop-filter: blur(25px) saturate(200%);
-    border-radius: 12px;
-    display: flex;
-    justify-content:start;
-    align-items:center;
-    position: absolute;
-    bottom: 0.8rem;
-    color: black;
-    text-align: left;
-    font-size: 1.25rem;
-    width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.8rem;
-    transition: 3s ease;
-    overflow: hidden !important;
-
-    svg{
-      margin-right: 20px;
-    }
-
-    &.active{
-      background: #FF7506; 
-    }
-
-    :hover {
-      background: #FF7506;
-
-    }
-`
 export const Logo = styled.a`
   font-size: 2rem !important;
   margin: 0 !important;

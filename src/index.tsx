@@ -4,7 +4,7 @@
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 // import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-// import TicketManagement from './components/TicketManagement';
+// import TicketManagementForm from './pages/TicketManager';
 
 
 // const router = createBrowserRouter([
@@ -14,7 +14,7 @@
 //   }, 
 //   {
 //     path: "/TicketManagement",
-//     element:  <TicketManagement/>
+//     element:  <TicketManagementForm/>
 //   },  
 // ])
 // const root = ReactDOM.createRoot(document.getElementById('root')as HTMLElement);
