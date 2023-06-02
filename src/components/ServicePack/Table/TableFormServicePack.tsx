@@ -1,10 +1,13 @@
 import { UserOutlined,ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Table, Modal } from "antd";
-import { TableCustom, ButtonAction } from './styles';
+import { TableCustom, ButtonAction, ButtonCreate } from '../../Styles/styles';
+import SearchBox from '../../SearchBox';
+import { useNavigate } from 'react-router-dom';
 const {confirm} = Modal;
 
 
 const TableFormServicePack = () => {
+    const navigate = useNavigate();
 
 
     const columns =[
@@ -53,7 +56,27 @@ const TableFormServicePack = () => {
     ]
 
     return(
-        <TableCustom />
+        <div>
+        <SearchBox/>
+        <ButtonCreate >Xuất file(.csv)</ButtonCreate>
+        <ButtonCreate >Thêm gói vé</ButtonCreate>
+        
+    <TableCustom 
+        columns={columns} 
+        // dataSource={number} 
+        // loading={loading} 
+        scroll={{y: 430}}
+    //     onChange={(pagination:any) => {
+    //         const searchParams = new URLSearchParams(location.search);
+    //         searchParams.set("page",pagination.current);
+    //         searchParams.set("limit",pagination.pageSize);
+
+    //         navigate(`${location.pathname}?${searchParams.toString()}`);
+    //         // console.log(location)
+    // }}
+    /> 
+        </div>
+
     )
 }
 

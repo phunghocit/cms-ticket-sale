@@ -27,7 +27,7 @@ const PrivateLayout = ({ children, title }:Props) => {
           <DesktopOutlined />Quản lý vé
         </MenuItem>
 
-        <MenuItem to="/NumberLevel/Table">
+        <MenuItem to="/TicketCheck">
         <FileSearchOutlined /> Đối soát vé
         </MenuItem>
         <DropdownMenuItem menu={{ items }} >
