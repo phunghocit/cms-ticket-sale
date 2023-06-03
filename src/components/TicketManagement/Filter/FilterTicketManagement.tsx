@@ -41,44 +41,47 @@ const FilterTicketManagement = () => {
     setCheckAll2(e.target.checked);
   };
   return (
-    <Form form={form} layout="vertical">
-      <Form.Item
-        label="Từ ngày"
-        name="time"
-        rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
-      >
-        <DatePicker renderExtraFooter={() => "extra footer"} showTime />
-      </Form.Item>
-      <Form.Item
-        label="Đến ngày"
-        name="deadline"
-        rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
-      >
-        <DatePicker renderExtraFooter={() => "extra footer"} showTime />
-      </Form.Item>
-      <Form.Item
-        label="Tình trạng sử dụng"
-        name="services_used"
-        style={{ width: "85%" }}
-      >
-        <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-        Tất cả
-      </Checkbox>
-      <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
-      </Form.Item>
-      <Form.Item
-        label="Cổng Check-in"
-        name="services_used"
-        style={{ width: "85%" }}
-      >
-        <Checkbox indeterminate={indeterminate2} onChange={onCheckAllChange2} checked={checkAll2}>
-        Tất cả
-      </Checkbox>
-      <CheckboxGroup options={plainOptions2} value={checkedList2} onChange={onChange2} />
-      </Form.Item>
-      <SubmitButton >Lọc</SubmitButton>
+    <Modal>
+      <Form form={form} layout="vertical">
+        <Form.Item
+          label="Từ ngày"
+          name="time"
+          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+        >
+          <DatePicker renderExtraFooter={() => "extra footer"} showTime />
+        </Form.Item>
+        <Form.Item
+          label="Đến ngày"
+          name="deadline"
+          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+        >
+          <DatePicker renderExtraFooter={() => "extra footer"} showTime />
+        </Form.Item>
+        <Form.Item
+          label="Tình trạng sử dụng"
+          name="services_used"
+          style={{ width: "85%" }}
+        >
+          <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+          Tất cả
+        </Checkbox>
+        <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
+        </Form.Item>
+        <Form.Item
+          label="Cổng Check-in"
+          name="services_used"
+          style={{ width: "85%" }}
+        >
+          <Checkbox indeterminate={indeterminate2} onChange={onCheckAllChange2} checked={checkAll2}>
+          Tất cả
+        </Checkbox>
+        <CheckboxGroup options={plainOptions2} value={checkedList2} onChange={onChange2} />
+        </Form.Item>
+        <SubmitButton >Lọc</SubmitButton>
 
-    </Form>
+      </Form>
+    </Modal>
+
   );
 }
 
