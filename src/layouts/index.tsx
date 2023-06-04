@@ -12,7 +12,7 @@ interface Props {
 const PrivateLayout = ({ children, title }:Props) => {
   const items: MenuProps["items"] = [
     {
-      label: <MenuItem to="/ServicePack/Add"> Gói dịch vụ </MenuItem>,
+      label: <MenuItem to="/ServicePack"> Gói dịch vụ </MenuItem>,
       key: "0",
     },
   ];

@@ -6,7 +6,7 @@ import Layout from "./layouts"
 import Dasboard from "./components/Dashboard"
 import TicketManagement from './components/TicketManagement';
 import ModalServicePack from './components/ServicePack/Modal/ModalFormServicePack';
-import TableServicePack from './components/ServicePack/Table/TableFormServicePack';
+import TableServicePack from './components/ServicePack';
 import TableTicketCheck from './components/TicketCheck/Table/TableTicketCheck';
 import FilterTicketManagement from './components/TicketManagement/Filter/FilterTicketManagement';
 function App() {

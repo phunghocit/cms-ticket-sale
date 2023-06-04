@@ -1,12 +1,25 @@
 import { Form,Modal, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select } from 'antd'
 import React from 'react'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-const ModalFormServicePack = () => {
+interface Props {
+  open?:any
+  onSubmit?:any
+  onCancel?:any
+  loading?:boolean
+}
+const ModalFormServicePack = ({open,onSubmit,onCancel,loading}:Props) => {
     const [form] = Form.useForm();
     const onChange = (e: CheckboxChangeEvent) => {
         console.log(`checked = ${e.target.checked}`);
       };
+
+    const onCreate = async () => {
+        const data = await form.validateFields();
+        // onSubmit(formData.id,data);
+    }
+ 
   return (
+    <Modal confirmLoading={loading} open={open} onCancel={onCancel}  onOk={onCreate}>
     <Form form={form} layout="vertical">
       <Form.Item
         label="Tên gói vé"
@@ -64,6 +77,8 @@ const ModalFormServicePack = () => {
         />
       </Form.Item>
     </Form>
+    </Modal>
+
   );
 }
 

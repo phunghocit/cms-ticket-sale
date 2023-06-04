@@ -169,7 +169,7 @@ export const Content = styled.div`
   /* -webkit-backdrop-filter: blur(6.1px); */
   padding: 1rem;
   bottom: 0;
-  height: calc(100vh - 10vh - 2rem);
+  height: calc(100vh - 10vh - 4.2rem);
   /* overflow-y: auto;
   ::-webkit-scrollbar {
     width: 0px;

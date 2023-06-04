@@ -3,12 +3,13 @@ import { Button, Table, Modal } from "antd";
 import { TableCustom, ButtonAction, ButtonCreate } from '../../Styles/styles';
 import SearchBox from '../../SearchBox';
 import { useNavigate } from 'react-router-dom';
+import ModalFormServicePack from '../Modal/ModalFormServicePack';
+import { useState } from 'react';
 const {confirm} = Modal;
 
 
 const TableFormServicePack = () => {
     const navigate = useNavigate();
-
 
     const columns =[
         {
@@ -57,10 +58,6 @@ const TableFormServicePack = () => {
 
     return(
         <div>
-        <SearchBox/>
-        <ButtonCreate >Xuất file(.csv)</ButtonCreate>
-        <ButtonCreate >Thêm gói vé</ButtonCreate>
-        
     <TableCustom 
         columns={columns} 
         // dataSource={number} 

@@ -22,7 +22,7 @@ const AuthUser = () => {
         <Signal>
             <Mail />
             <Bell />
-          </Signal>
+        </Signal>
         <UserInfo>
           {imageUrls.map((url) => {
               return <img src={url} />;

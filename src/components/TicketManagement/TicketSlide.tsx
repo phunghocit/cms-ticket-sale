@@ -39,19 +39,12 @@ export const fetchTickets= createAsyncThunk('tickets/fetchTickets', async () => 
   let newticket: any = [];
   let count = 1;
   res.forEach( async (doc) => {
-      // //lấy từng doc trong firebase
-
-      // const docRef2 = collection(db, "users",`${localStorage.getItem('token')}`); //tra ve collection 
-      // const docSnap2 = await getDocs(docRef2)
-            
-      newticket.push({...doc.data(),stt:count++}); //lấy hết data vào trong mảng tạm newUsers
-      // doc.data() is never undefined for query doc snapshots
+      newticket.push({...doc.data(),stt:count++}); 
       console.log(doc.id, " => ", doc.data());
       console.log(newticket);
     });
   const data = newticket;
   console.log(data);
-  
   return data;
 });
 
