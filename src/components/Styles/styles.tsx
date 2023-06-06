@@ -40,7 +40,7 @@ export const TableCustom = styled(Table)`
   .ant-table {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    background-color: rgba(17, 25, 40, 0.73);
+    /* background-color: rgba(17, 25, 40, 0.73); */
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
   }
@@ -48,8 +48,8 @@ export const TableCustom = styled(Table)`
   .ant-table-thead .ant-table-cell {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    background-color: rgba(17, 25, 40, 0.73);
-    color: white;
+    background-color: #F1F4F8;
+    /* color: white; */
   }
   .ant-table-tbody {
     height: 70%;
@@ -62,7 +62,7 @@ export const TableCustom = styled(Table)`
 
   .ant-table-tbody .ant-table-cell {
     border-bottom: 0.75px solid white;
-    color: pink;
+    /* color: pink; */
     font-weight: bold;
     padding: 0.3rem;
   }
@@ -78,11 +78,13 @@ export const TableCustom = styled(Table)`
   .ant-pagination {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    background-color: rgba(17, 25, 40, 0.73);
+    /* background-color: rgba(17, 25, 40, 0.73); */
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
     margin: 0px !important;
     padding: 0.5rem;
+    /* bottom: 0; */
+    justify-content: center;
     border-radius: 0 0 1rem 1rem;
   }
 `;

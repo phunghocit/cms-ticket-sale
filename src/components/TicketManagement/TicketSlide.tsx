@@ -1,16 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
+import { message } from 'antd';
 
 const TicketSlide = createSlice({
   name: 'ticketList',
   initialState: { status: 'idle', tickets: [] },
   reducers: {
-    //     fetchTicket: (state:any, action:any) => {
-    //   state.push(action.payload);
-    // }, // action creators
-    // IMMER
-    // addTodo: (state, action) => {
+        fetchTicket: (state:any, action:any) => {
+      state.push(action.payload);
+    }, // action creators
+
+    // addTicket: (state:any, action:any) => {
     //   state.push(action.payload);
     // }, // action creators
     // toggleTodoStatus: (state, action) => {
@@ -30,6 +31,9 @@ const TicketSlide = createSlice({
         state.tickets = action.payload;
         state.status = 'idle';
       })
+    //   .addCase(addNewTicketPack.fulfilled, (state:any, action:any) => {
+    //     state.tickets.push( action.payload);
+    //   })
   },
 });
 
@@ -48,7 +52,23 @@ export const fetchTickets= createAsyncThunk('tickets/fetchTickets', async () => 
   return data;
 });
 
-
+// export const addNewTicketPack = createAsyncThunk(
+//     'tickets/addNewTicketPack',
+//     async (data:any) => {
+//     // console.log(data);
+//     await addDoc(collection(db, "ticketpack"), {
+//       code: data.code,
+//       name: data.name,
+//       time: data.time,
+//       deadline: data.deadline,
+//       status: data.status,
+//       timesell: data.timesell,
+//       timeused: data.timeused,
+//     })
+//       console.log({ data });
+//       return data.tickets;
+//     }
+//   );
 /*
   => todos/fetchTodos/pending
   => todos/fetchTodos/fullfilled

@@ -12,7 +12,7 @@ interface Props {
 const PrivateLayout = ({ children, title }:Props) => {
   const items: MenuProps["items"] = [
     {
-      label: <MenuItem to="/ServicePack"> Gói dịch vụ </MenuItem>,
+      label: <MenuItem to="/ServicePack/Table"> Gói dịch vụ </MenuItem>,
       key: "0",
     },
   ];
@@ -30,13 +30,13 @@ const PrivateLayout = ({ children, title }:Props) => {
         <MenuItem to="/TicketCheck">
         <FileSearchOutlined /> Đối soát vé
         </MenuItem>
-        <DropdownMenuItem menu={{ items }} >
-          <a onClick={(e) => e.preventDefault()}>
+        <DropdownMenuItem menu={{ items }} trigger={['click']} >
+          <div onClick={(e) => e.preventDefault()}>
             <Space>
             <SettingOutlined />Cài đặt
               {/* <MoreOutlined /> */}
             </Space>
-          </a>
+          </div>
         </DropdownMenuItem>
       </Sidebar>
       <Main>

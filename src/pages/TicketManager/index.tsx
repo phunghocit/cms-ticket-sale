@@ -1,6 +1,6 @@
 import React from 'react'
 import  Layout  from '../../layouts'
-import TicketManagement from '../../components/TicketManagement'
+import TicketManagement from '../../components/TicketManagement/TableTicketManagement'
 
 const TicketManagementForm = () => {
   return (

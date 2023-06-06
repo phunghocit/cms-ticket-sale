@@ -2,14 +2,21 @@ import { UserOutlined,ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Table, Modal } from "antd";
 import { TableCustom, ButtonAction, ButtonCreate } from '../../Styles/styles';
 import SearchBox from '../../SearchBox';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ModalFormServicePack from '../Modal/ModalFormServicePack';
-import { useState } from 'react';
-const {confirm} = Modal;
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { servicepackRemainingSelector } from '../../../redux/selectors';
+import { fetchServicePack } from '../ServicePackSlide';
+import { useAppDispatch } from '../../../hook/redux';
+interface Props {
+    servicepacklist?:any
+    onUpdate?:any
+  }
 
-
-const TableFormServicePack = () => {
+const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const columns =[
         {
@@ -18,29 +25,39 @@ const TableFormServicePack = () => {
             key: 'stt'
         },
         {
+            title: 'Mã gói vé',
+            dataIndex: 'code',
+            key: 'code'
+        },
+        {
             title: 'Tên gói vé',
             dataIndex: 'name',
             key: 'name'
         },
         {
             title: 'Ngày áp dụng',
-            dataIndex: 'code',
-            key: 'code'
+            dataIndex: 'time',
+            key: 'time'
         },
         {
             title: 'Ngày hết hạn',
-            dataIndex: 'code',
-            key: 'code'
+            dataIndex: 'deadline',
+            key: 'deadline'
         },
         {
-            title: 'Giá vé',
+            title: 'Giá vé(VNĐ/Vé)',
             dataIndex: 'price',
             key: 'price'
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
+            title: 'Giá Combo(VNĐ/Combo)',
+            dataIndex: 'pricecombo',
+            key: 'pricecombo',
+        },
+        {
+            title: 'Tình trạng',
+            dataIndex: 'status',
+            key: 'status',
         },
         {
             title: '',
@@ -49,7 +66,7 @@ const TableFormServicePack = () => {
             render: (_:any,item:any) =>{
                 return(
                     <div>
-                        <ButtonAction >Cập nhật</ButtonAction>
+                        <ButtonAction onClick={onUpdate}>Cập nhật</ButtonAction>
                     </div>
                 )
             }
@@ -60,17 +77,17 @@ const TableFormServicePack = () => {
         <div>
     <TableCustom 
         columns={columns} 
-        // dataSource={number} 
+        dataSource={servicepacklist} 
         // loading={loading} 
         scroll={{y: 430}}
-    //     onChange={(pagination:any) => {
-    //         const searchParams = new URLSearchParams(location.search);
-    //         searchParams.set("page",pagination.current);
-    //         searchParams.set("limit",pagination.pageSize);
+        onChange={(pagination:any) => {
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set("page",pagination.current);
+            searchParams.set("limit",pagination.pageSize);
 
-    //         navigate(`${location.pathname}?${searchParams.toString()}`);
+            navigate(`${location.pathname}?${searchParams.toString()}`);
     //         // console.log(location)
-    // }}
+    }}
     /> 
         </div>
 
