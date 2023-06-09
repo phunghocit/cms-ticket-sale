@@ -5,12 +5,18 @@ import TableFormServicePack from './Table/TableFormServicePack';
 import { ButtonCreate, Headbar } from '../Styles/styles';
 import SearchBox from '../SearchBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewServicePack, fetchServicePack } from './ServicePackSlide';
+import { addNewServicePack, fetchServicePack, filterServicePack } from './ServicePackSlide';
 import { useAppDispatch } from '../../hook/redux';
 import { servicepackRemainingSelector } from '../../redux/selectors';
+import { ramdomcode } from '../randomcode';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase/firebase-config';
 
+const DEFAULT_MODAL={code: "",name:"",startdate:"",starttime:"",deadlinedate:"",deadlinetime:"",price:"",pricecombo:"",quantity:"",status:""}
 const ServicePack = () => {
   const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState<any>(DEFAULT_MODAL);
+
   const [formLoading, setFormLoading] = useState(false);
   const dispatch = useAppDispatch();
   const servicepacklist = useSelector(servicepackRemainingSelector);
@@ -18,26 +24,48 @@ const ServicePack = () => {
 
   useEffect(() => {
     dispatch(fetchServicePack());
-  }, [servicepacklist]);
+  }, []);
 
-  const onSubmit = (data:any) => {
-    console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
+  const onSubmit = (NewServicePack:any) => {
     // setFormLoading(true);
-      dispatch(
-        addNewServicePack(data)
-      );
+    const data = {
+      code: ramdomcode(12),
+      name: NewServicePack.name,
+      startdate:`${NewServicePack.startdate.date()}/${NewServicePack.startdate.month()}/${NewServicePack.startdate.year()}`,
+      starttime:`${NewServicePack.starttime.hour()}:${NewServicePack.starttime.minute()}:${NewServicePack.starttime.second()}`,
+      deadlinedate:`${NewServicePack.deadlinedate.date()}/${NewServicePack.deadlinedate.month()}/${NewServicePack.deadlinedate.year()}`,
+      deadlinetime:`${NewServicePack.deadlinetime.hour()}:${NewServicePack.deadlinetime.minute()}:${NewServicePack.deadlinetime.second()}`,
+      price: Intl.NumberFormat().format(NewServicePack.price),
+      pricecombo: Intl.NumberFormat().format(NewServicePack.pricecombo),
+      quantity: NewServicePack.quantity,
+      status: NewServicePack.status,
+    };
+console.log(data);
+
+    // console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
+      // dispatch(
+
+      //   addNewServicePack(data)
+      // );
+
     setOpen(false);
+    setFormData(DEFAULT_MODAL);
+
   }
 
   const onCreate = () => {
     setOpen(true)
   }
-  const onUpdate = () => {
+  const onUpdate = async (id:any) => {
+    const res = await getDoc(doc(db, "servicepacks",`${id}`))
+    // setFormData(res.data());
+    console.log(res.data());
     setOpen(true)
   }
-  const onCancel = () => {
+  const onCancel = () => { 
     setOpen(false);
-    // setFormData(DEFAULT_USER);
+    setFormData(DEFAULT_MODAL);
+    
   }
   return (
     <div>
@@ -46,7 +74,7 @@ const ServicePack = () => {
 
         <ButtonCreate onClick={onCreate}>Thêm gói vé</ButtonCreate>
         <SearchBox />
-        <ModalFormServicePack open={open} onSubmit={onSubmit} onCancel={onCancel} loading={formLoading}/>
+        <ModalFormServicePack formData={formData} open={open} onSubmit={onSubmit} onCancel={onCancel} loading={formLoading}/>
 
       </Headbar>
       <TableFormServicePack servicepacklist={servicepacklist} onUpdate={onUpdate}/>

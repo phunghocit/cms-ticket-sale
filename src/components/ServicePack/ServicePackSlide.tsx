@@ -1,20 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import { message } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { ramdomcode } from '../randomcode';
 const ServicePackSlide = createSlice({
   name: 'servicepacklist',
-  initialState: { status: 'idle', servicepacks: [] },
+  initialState: { status: 'idle', servicepacks: [],service:[] },
   reducers: {
-      fetchServicePack: (state:any, action:any) => {
-      state.push(action.payload);
-    }, // action creators
+    //   fetchServicePack: (state:any, action:any) => {
+    //   // state.push(action.payload);
+    //   state.servicepacks = action.payload;
+      
+    // }, // action creators
 
-    addServicePack: (state:any, action:any) => {
-      state.push(action.payload);
-    }, // action creators
+    // addServicePack: (state:any, action:any) => {
+    //   state.push(action.payload);
+    // },
+    // updateServicePack: (state:any, action:any) => {
+    //   state.push(action.payload);
+    // },
+    // filterServicePack: (state:any, action:any) => {
+    //   state.push(action.payload);
+
+
+    // },
+    
+    // action creators
     // toggleTodoStatus: (state, action) => {
     //   const currentTicket = state.find((ticket:any) => ticket.id === action.payload);
     //   if (currentTicket) {
@@ -33,7 +45,13 @@ const ServicePackSlide = createSlice({
         state.status = 'idle';
       })
       .addCase(addNewServicePack.fulfilled, (state:any, action:any) => {
-        // state.servicepacks.push( action.payload);
+        state.servicepacks.push( action.payload);
+      })
+      .addCase(updateServicePack.fulfilled, (state:any, action:any) => {
+        state.servicepacks.push( action.payload);
+      })
+      .addCase(filterServicePack.fulfilled, (state:any, action:any) => {
+        state.service= action.payload;
       })
   },
 });
@@ -44,31 +62,66 @@ export const fetchServicePack= createAsyncThunk('servicepacks/fetchServicePack',
   let newservicepack: any = [];
   let count = 1;
   res.forEach( async (doc) => {
-      newservicepack.push({...doc.data(),stt:count++}); 
-      console.log(doc.id, " => ", doc.data());
-      console.log(newservicepack);
+      newservicepack.push({...doc.data(),id:doc.id,stt:count++}); 
+      // console.log(doc.id, " => ", doc.data());
+      // console.log(newservicepack);
     });
-  const data = newservicepack;
-  console.log(data);
-  return data;
+  return newservicepack;
 });
 
 export const addNewServicePack = createAsyncThunk(
     'servicepacks/addNewServicePack',
     async (data:any) => {
-    console.log(`${data.deadlinetime.hour()}:${data.deadlinetime.minute()}:${data.deadlinetime.second()} `);
-    await addDoc(collection(db, "servicepacks"), {             
+      console.log(data);
+      
+    // console.log(`${data.deadlinetime.hour()}:${data.deadlinetime.minute()}:${data.deadlinetime.second()} `);
+    const rest = await addDoc(collection(db, "servicepacks"), {             
       // code: uuidv4().slice(0, 12),
-      code: ramdomcode(12),
+      code: data.code,
       name: data.name,
-      time: `${data.startdate.date()}/${data.startdate.month()}/${data.startdate.year()} ${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()}`,
-      deadline: `${data.deadlinedate.date()}/${data.deadlinedate.month()}/${data.deadlinedate.year()} ${data.deadlinetime.hour()}:${data.deadlinetime.minute()}:${data.deadlinetime.second()}`,
-      price: `${data.price} VNĐ`,
-      pricecombo: `${data.pricecombo} VNĐ/${data.quantity} Vé`,
+      startdate:data.startdate,
+      starttime:data.starttime,
+      deadlinedate:data.deadlinedate,
+      deadlinetime:data.deadlinetime,
+      price: data.price,
+      pricecombo: data.pricecombo,
+      quantity:data.quantity,
+      status: data.status,
+    })
+    console.log(rest);
+      // console.log({ data });
+      return data;
+    }
+  );
+  export const updateServicePack = createAsyncThunk(
+    'servicepacks/updateServicePack',
+    async (data:any,id:any) => {
+    await updateDoc(doc(db, "servicepacks",`${id}`), {
+      // code: uuidv4().slice(0, 12),
+      // code: ramdomcode(12),
+      code: data.code,
+      name: data.name,
+      startdate:data.startdate,
+      starttime:data.starttime,
+      deadlinedate:data.deadlinedate,
+      deadlinetime:data.deadlinetime,
+      price: data.price,
+      pricecombo: data.pricecombo,
+      quantity:data.quantity,
       status: data.status,
     })
       console.log({ data });
       // return data;
+    }
+  );
+  export const filterServicePack = createAsyncThunk(
+    'servicepacks/filterServicePack',
+    async (id:any) => {
+      const res = await getDoc(doc(db, "servicepacks",`${id}`));
+      const data =res.data()
+      console.log(data);
+      
+      return data;
     }
   );
 /*

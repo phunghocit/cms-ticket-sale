@@ -22,8 +22,7 @@ function App() {
           <Route />
           <Route path="/TicketCheck" element={<TableTicketCheck />} />
           <Route path="/ServicePack/Table" element={<TableServicePack />} />
-          <Route path="/ServicePack/Add" element={<ModalServicePack />} />
-          <Route path="/ServicePack/Update" />
+
           <Route />
         </Routes>
       </Layout>

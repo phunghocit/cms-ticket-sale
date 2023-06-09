@@ -37,22 +37,60 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
         {
             title: 'Ngày áp dụng',
             dataIndex: 'time',
-            key: 'time'
+            key: 'time',
+            render: (_:any,item:any) =>{
+                return(
+                    <div>
+                        {item.startdate} {item.starttime}
+                            {/* {item.startdate.getDate()}/{item.startdate.month()}/{item.startdate.year()} {item.starttime.hour()}:{item.starttime.minute()}:{item.starttime.second()} */}
+                    </div>
+                )
+
+            }
         },
         {
             title: 'Ngày hết hạn',
             dataIndex: 'deadline',
-            key: 'deadline'
+            key: 'deadline',
+            render: (_:any,item:any) =>{
+                return(
+                    <div>
+                        {item.deadlinedate} {item.deadlinetime}
+                            {/* {item.deadlinedate.getDate()}/{item.deadlinedate.month()}/{item.deadlinedate.year()} {item.deadlinetime.hour()}:{item.deadlinetime.minute()}:{item.deadlinetime.second()} */}
+                    </div>
+                )
+
+            }
         },
         {
             title: 'Giá vé(VNĐ/Vé)',
             dataIndex: 'price',
-            key: 'price'
+            key: 'price',
+            render: (_:any,item:any) =>{
+                if (item.price != '') {
+                    return(
+                        <div>
+                                {item.price} VNĐ 
+                        </div>
+                    )
+                }
+
+            }
         },
         {
             title: 'Giá Combo(VNĐ/Combo)',
             dataIndex: 'pricecombo',
             key: 'pricecombo',
+            render: (_:any,item:any) =>{
+                if (item.pricecombo != '') {
+                    return(
+                        <div>
+                                {item.pricecombo} VNĐ / {item.quantity} Vé
+                        </div>
+                    )
+                }
+
+            }
         },
         {
             title: 'Tình trạng',
@@ -66,7 +104,7 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
             render: (_:any,item:any) =>{
                 return(
                     <div>
-                        <ButtonAction onClick={onUpdate}>Cập nhật</ButtonAction>
+                        <ButtonAction onClick={()=>{onUpdate(item.id)}}>Cập nhật</ButtonAction>
                     </div>
                 )
             }
