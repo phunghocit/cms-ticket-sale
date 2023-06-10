@@ -8,42 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ticketListSelector, ticketsRemainingSelector } from '../../../redux/selectors';
 import { fetchTickets } from '../TicketSlide';
 import { useAppDispatch } from '../../../hook/redux';
-
-const TicketManagement = () => {
+interface Props{
+  options?:any
+  loading?:any
+}
+const TableTicketManagement = ({options,loading}:Props) => {
   // const [ticket, setTicket] = useState([]);
-  const [options, setOptions] = useState(0);
-  const [loading, setLoading] = useState(false);
-
   const location = useLocation();
   const navigate = useNavigate();
   const ticketList = useSelector(ticketsRemainingSelector);
   console.log(ticketList);
   const dispatch = useAppDispatch();
-  
-  // const fetchData = async () => {
-  //   // setLoading(true);
-  //   const docRef = collection(db, "TicketManagement"); //tra ve collection
-  //   const docSnap = await getDocs(docRef);
-  //   let newticket: any = [];
-  //   docSnap.forEach( async (doc) => {
-  //     // //lấy từng doc trong firebase
-
-  //     // const docRef2 = collection(db, "users",`${localStorage.getItem('token')}`); //tra ve collection 
-  //     // const docSnap2 = await getDocs(docRef2)
-            
-  //     newticket.push({...doc.data()}); //lấy hết data vào trong mảng tạm newUsers
-  //     // doc.data() is never undefined for query doc snapshots
-  //     console.log(doc.id, " => ", doc.data());
-  //     console.log(newticket);
-  //     setTicket(newticket);
-      
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-
-  // }, []);
   useEffect(() => {
     dispatch(fetchTickets());
   }, [])
@@ -126,35 +101,17 @@ const columns2 =[
       key: 'gate',
   },
 ]
-const changOptions =()=>{
-  if (options==1) {
-    setLoading(true);
-    setOptions(0);
-    setLoading(false);
 
-  }
-}
-const changOptions1 =()=>{
-  if (options==0) {
-    setLoading(true);
-    setOptions(1);
-    setLoading(false);
-
-  }
-}
   return (
     <div>
-      <ButtonCreate onClick={changOptions} >Gói gia đình</ButtonCreate>
-      <ButtonCreate  onClick={changOptions1}>Gói sự kiện</ButtonCreate>
-                <SearchBox  />
-        <ButtonCreate >Lọc vé</ButtonCreate>
-        <ButtonCreate >Xuất file(.csv)</ButtonCreate>
+
+
       
     <TableCustom 
       
         columns={options==1? columns:columns2} 
         dataSource={ticketList} 
-        // loading={loading} 
+        loading={loading} 
         scroll={{y: 430}}
         onChange={(pagination:any) => {
             const searchParams = new URLSearchParams(location.search);
@@ -169,4 +126,4 @@ const changOptions1 =()=>{
   )
 }
 
-export default TicketManagement
+export default TableTicketManagement

@@ -4,7 +4,7 @@ import './App.css';
 import { Routes, Route, Router } from 'react-router-dom'
 import Layout from "./layouts"
 import Dasboard from "./components/Dashboard"
-import TicketManagement from './components/TicketManagement/TableTicketManagement';
+import TicketManagement from './components/TicketManagement';
 import ModalServicePack from './components/ServicePack/Modal/ModalFormServicePack';
 import TableServicePack from './components/ServicePack';
 import TableTicketCheck from './components/TicketCheck/Table/TableTicketCheck';

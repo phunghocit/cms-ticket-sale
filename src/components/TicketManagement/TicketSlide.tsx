@@ -7,19 +7,7 @@ const TicketSlide = createSlice({
   name: 'ticketList',
   initialState: { status: 'idle', tickets: [] },
   reducers: {
-        fetchTicket: (state:any, action:any) => {
-      state.push(action.payload);
-    }, // action creators
 
-    // addTicket: (state:any, action:any) => {
-    //   state.push(action.payload);
-    // }, // action creators
-    // toggleTodoStatus: (state, action) => {
-    //   const currentTicket = state.find((ticket:any) => ticket.id === action.payload);
-    //   if (currentTicket) {
-    //     currentTicket.completed = !currentTicket.completed;
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder

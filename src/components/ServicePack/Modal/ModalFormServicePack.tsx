@@ -1,5 +1,5 @@
 import { Form,Modal, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select, TimePicker } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { addNewServicePack } from '../ServicePackSlide'
@@ -20,16 +20,16 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
     const [form] = Form.useForm();
     const dateFormat = 'DD/MM/YYYY';
     const timeFormat = 'HH:mm:ss';
-    let { id } = useParams();
+    // const [ id ,setId] = useState();
 
     const onChange = (e: CheckboxChangeEvent) => {
         console.log(`checked = ${e.target.checked}`);
       };
 
     const onCreate = async () => {
-        const NewServicePack = await form.validateFields();
-        console.log(NewServicePack);
-        onSubmit(NewServicePack);
+        const data = await form.validateFields();
+        //console.log(formData.id,data);
+        onSubmit(formData.id,data);
     }
     useEffect(()=>{
       if(!open){
@@ -38,7 +38,7 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
   },[open])
 
   useEffect(()=>{
-      if(open && formData){
+      if(open && formData.id){
           form.setFieldsValue(formData);
           console.log(formData);
       }
@@ -51,30 +51,30 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
       onOk={onCreate}
     >
       <Form form={form} layout="vertical">
-        {id ? (
+        {formData.id ? (
           <Form.Item
             label="Mã sự kiện"
             name="codeevent"
-            rules={[{ required: true, message: "Tên sản phẩm là bắt buộc!" }]}
+            rules={[{ required: true, message: "Mã sự kiện là bắt buộc!" }]}
           >
-            <Input placeholder="Nhập tên gói vé" />
+            <Input placeholder="Nhập mã sự kiện" />
           </Form.Item>
         ) : (
           ""
         )}
-        {id ? (
+        {formData.id ? (
           <Form.Item
             label="Tên sự kiện"
             name="nameevent"
-            rules={[{ required: true, message: "Tên sản phẩm là bắt buộc!" }]}
+            rules={[{ required: true, message: "Tên sự kiện là bắt buộc!" }]}
           >
-            <Input placeholder="Nhập tên gói vé" />
+            <Input placeholder="Nhập tên sự kiện" />
           </Form.Item>
         ) : (
           <Form.Item
             label="Tên gói vé"
             name="name"
-            rules={[{ required: true, message: "Tên sản phẩm là bắt buộc!" }]}
+            rules={[{ required: true, message: "Tên gói vé là bắt buộc!" }]}
           >
             <Input placeholder="Nhập tên gói vé" />
           </Form.Item>
@@ -83,16 +83,16 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
         <Form.Item
           label="Ngày áp dụng"
           name="startdate"
-          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+          rules={[{ required: true, message: "Ngày áp dụng là bắt buộc!" }]}
         >
           <Input type="date" />
           {/* <DatePicker placeholder="dd/mm/yyyy" format={dateFormat} /> */}
         </Form.Item>
         <Form.Item
           name="starttime"
-          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+          rules={[{ required: true, message: "Giờ áp dụng là bắt buộc!" }]}
         >
-          <Input type="time" />
+          <Input placeholder="hh-mm-ss" type="time" />
           
           {/* <TimePicker placeholder="hh:mm:ss" format={timeFormat} /> */}
           {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
@@ -100,15 +100,18 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
         <Form.Item
           label="Ngày hết hạn"
           name="deadlinedate"
-          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+          rules={[{ required: true, message: "Ngày hết hạn là bắt buộc!" }]}
         >
-          <DatePicker placeholder="dd/mm/yyyy" format={dateFormat} />
+          {/* <input type="datetime-local" /> */}
+          <Input type="date" />
+          {/* <DatePicker placeholder="dd/mm/yyyy" format={dateFormat} /> */}
         </Form.Item>
         <Form.Item
           name="deadlinetime"
-          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
+          rules={[{ required: true, message: "Giờ hết hạn là bắt buộc!" }]}
         >
-          <TimePicker placeholder="hh:mm:ss" format={timeFormat} />
+          <Input placeholder="hh-mm-ss" type="time" />
+          {/* <TimePicker placeholder="hh:mm:ss" format={timeFormat} /> */}
         </Form.Item>
 
         <p>Giá vé áp dụng</p>

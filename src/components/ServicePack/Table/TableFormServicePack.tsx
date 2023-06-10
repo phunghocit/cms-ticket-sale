@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { servicepackRemainingSelector } from '../../../redux/selectors';
 import { fetchServicePack } from '../ServicePackSlide';
 import { useAppDispatch } from '../../../hook/redux';
+import edit from '../../../shared/icon/edit.png';
 interface Props {
     servicepacklist?:any
     onUpdate?:any
@@ -42,7 +43,7 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
                 return(
                     <div>
                         {item.startdate} {item.starttime}
-                            {/* {item.startdate.getDate()}/{item.startdate.month()}/{item.startdate.year()} {item.starttime.hour()}:{item.starttime.minute()}:{item.starttime.second()} */}
+                            {/* {item.startdate.date}/{item.startdate.month}/{item.startdate.year} {item.starttime.hour}:{item.starttime.minute}:{item.starttime.second} */}
                     </div>
                 )
 
@@ -70,7 +71,7 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
                 if (item.price != '') {
                     return(
                         <div>
-                                {item.price} VNĐ 
+                                {Intl.NumberFormat().format(item.price)} VNĐ 
                         </div>
                     )
                 }
@@ -85,7 +86,7 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
                 if (item.pricecombo != '') {
                     return(
                         <div>
-                                {item.pricecombo} VNĐ / {item.quantity} Vé
+                                {Intl.NumberFormat().format(item.pricecombo)} VNĐ / {item.quantity} Vé
                         </div>
                     )
                 }
@@ -96,6 +97,14 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
             title: 'Tình trạng',
             dataIndex: 'status',
             key: 'status',
+            render: (_:any,item:any) =>{
+                if (item.status) {
+                    return <div>Đang áp dụng</div>;
+                }else{
+                    return <div>Tắt</div>
+                }
+
+            }
         },
         {
             title: '',
@@ -104,7 +113,8 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
             render: (_:any,item:any) =>{
                 return(
                     <div>
-                        <ButtonAction onClick={()=>{onUpdate(item.id)}}>Cập nhật</ButtonAction>
+                        <a href="#" onClick={()=>{onUpdate(item.id)}}><img src={edit}/>Cập nhật</a>
+                        {/* <ButtonAction onClick={()=>{onUpdate(item.id)}}>Cập nhật</ButtonAction> */}
                     </div>
                 )
             }

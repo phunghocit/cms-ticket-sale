@@ -6,33 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { ramdomcode } from '../randomcode';
 const ServicePackSlide = createSlice({
   name: 'servicepacklist',
-  initialState: { status: 'idle', servicepacks: [],service:[] },
+  initialState: { status: 'idle', servicepacks: [] },
   reducers: {
-    //   fetchServicePack: (state:any, action:any) => {
-    //   // state.push(action.payload);
-    //   state.servicepacks = action.payload;
-      
-    // }, // action creators
 
-    // addServicePack: (state:any, action:any) => {
-    //   state.push(action.payload);
-    // },
-    // updateServicePack: (state:any, action:any) => {
-    //   state.push(action.payload);
-    // },
-    // filterServicePack: (state:any, action:any) => {
-    //   state.push(action.payload);
-
-
-    // },
-    
-    // action creators
-    // toggleTodoStatus: (state, action) => {
-    //   const currentTicket = state.find((ticket:any) => ticket.id === action.payload);
-    //   if (currentTicket) {
-    //     currentTicket.completed = !currentTicket.completed;
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -48,11 +24,12 @@ const ServicePackSlide = createSlice({
         state.servicepacks.push( action.payload);
       })
       .addCase(updateServicePack.fulfilled, (state:any, action:any) => {
-        state.servicepacks.push( action.payload);
+        let currentservicepack = state.servicepacks.find((servicepack:any) => servicepack.id === action.payload);
+        currentservicepack = action.payload;
       })
-      .addCase(filterServicePack.fulfilled, (state:any, action:any) => {
-        state.service= action.payload;
-      })
+      // .addCase(updateServicePack.fulfilled, (state, { payload }) => {
+      //   state.entities[payload.id] = payload})
+
   },
 });
 
@@ -63,14 +40,14 @@ export const fetchServicePack= createAsyncThunk('servicepacks/fetchServicePack',
   let count = 1;
   res.forEach( async (doc) => {
       newservicepack.push({...doc.data(),id:doc.id,stt:count++}); 
-      // console.log(doc.id, " => ", doc.data());
-      // console.log(newservicepack);
+      console.log(doc.id, " => ", doc.data());
+      console.log(newservicepack);
     });
   return newservicepack;
 });
 
 export const addNewServicePack = createAsyncThunk(
-    'servicepacks/addNewServicePack',
+    'servicepacklist/addNewServicePack',
     async (data:any) => {
       console.log(data);
       
@@ -94,13 +71,16 @@ export const addNewServicePack = createAsyncThunk(
     }
   );
   export const updateServicePack = createAsyncThunk(
-    'servicepacks/updateServicePack',
-    async (data:any,id:any) => {
-    await updateDoc(doc(db, "servicepacks",`${id}`), {
+    'servicepacklist/updateServicePack',
+    async (data:any) => {
+      console.log(data.ServiceId);
+      
+    const res =await updateDoc(doc(db, "servicepacks",`${data.ServiceId}`), {
       // code: uuidv4().slice(0, 12),
       // code: ramdomcode(12),
-      code: data.code,
-      name: data.name,
+      // name: data.name,
+      codeevent:data.codeevent,
+      nameevent:data.nameevent,
       startdate:data.startdate,
       starttime:data.starttime,
       deadlinedate:data.deadlinedate,
@@ -111,19 +91,19 @@ export const addNewServicePack = createAsyncThunk(
       status: data.status,
     })
       console.log({ data });
-      // return data;
+      return res;
     }
   );
-  export const filterServicePack = createAsyncThunk(
-    'servicepacks/filterServicePack',
-    async (id:any) => {
-      const res = await getDoc(doc(db, "servicepacks",`${id}`));
-      const data =res.data()
-      console.log(data);
+  // export const filterServicePack = createAsyncThunk(
+  //   'servicepacks/filterServicePack',
+  //   async (id:any) => {
+  //     const res = await getDoc(doc(db, "servicepacks",`${id}`));
+  //     const data =res.data()
+  //     console.log(data);
       
-      return data;
-    }
-  );
+  //     return data;
+  //   }
+  // );
 /*
   => todos/fetchTodos/pending
   => todos/fetchTodos/fullfilled

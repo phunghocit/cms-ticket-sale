@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Table, Button } from "antd";
 import Search from "antd/es/input/Search";
+import Modal from 'react-modal';
 
 
 export const Headbar = styled.div`
@@ -101,14 +102,25 @@ export const ButtonAction = styled(Button)`
 `;
 
 export const ButtonCreate = styled(Button)`
-  background-color: #3D9970;
-  border: 2px solid #3D9970 !important;
+  background-color:#FF993C;
+  border: 2px solid #FF993C !important;
   font-weight: bold;
   color: white;
 
   :hover{
     background-color: white;
-    color: #2ECC40 !important;
+    color: #FF993C !important;
+  }
+`
+export const ButtonFile = styled(Button)`
+  background-color:white;
+  border: 2px solid #FF993C !important;
+  font-weight: bold;
+  color:#FF993C;
+
+  :hover{
+    background-color: white;
+    color: #FF993C !important;
   }
 `
 export const SubmitButton = styled(Button)`
@@ -126,4 +138,13 @@ export const SubmitButton = styled(Button)`
         color:#4096ff;
         background: white;
     }
+`
+export const ModalCustom = styled(Modal)`
+/* display: flex; */
+position: 'absolute';
+background: #ffff;
+width: 30%; 
+justify-content: center;
+align-items: center;
+
 `

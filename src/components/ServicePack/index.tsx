@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import ModalFormServicePack from './Modal/ModalFormServicePack';
 import TableFormServicePack from './Table/TableFormServicePack';
-import { ButtonCreate, Headbar } from '../Styles/styles';
+import { ButtonCreate, ButtonFile, Headbar } from '../Styles/styles';
 import SearchBox from '../SearchBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewServicePack, fetchServicePack, filterServicePack } from './ServicePackSlide';
+import { addNewServicePack, fetchServicePack, updateServicePack } from './ServicePackSlide';
 import { useAppDispatch } from '../../hook/redux';
 import { servicepackRemainingSelector } from '../../redux/selectors';
 import { ramdomcode } from '../randomcode';
@@ -26,28 +26,37 @@ const ServicePack = () => {
     dispatch(fetchServicePack());
   }, []);
 
-  const onSubmit = (NewServicePack:any) => {
-    // setFormLoading(true);
-    const data = {
-      code: ramdomcode(12),
-      name: NewServicePack.name,
-      startdate:`${NewServicePack.startdate.date()}/${NewServicePack.startdate.month()}/${NewServicePack.startdate.year()}`,
-      starttime:`${NewServicePack.starttime.hour()}:${NewServicePack.starttime.minute()}:${NewServicePack.starttime.second()}`,
-      deadlinedate:`${NewServicePack.deadlinedate.date()}/${NewServicePack.deadlinedate.month()}/${NewServicePack.deadlinedate.year()}`,
-      deadlinetime:`${NewServicePack.deadlinetime.hour()}:${NewServicePack.deadlinetime.minute()}:${NewServicePack.deadlinetime.second()}`,
-      price: Intl.NumberFormat().format(NewServicePack.price),
-      pricecombo: Intl.NumberFormat().format(NewServicePack.pricecombo),
-      quantity: NewServicePack.quantity,
-      status: NewServicePack.status,
-    };
-console.log(data);
+  const onSubmit = (id:any,data:any) => {
+    setFormLoading(true);
+    if (id) {
+      console.log(id);
+      const NewServicePack = {...data,ServiceId:id}
+      dispatch(
+        updateServicePack(NewServicePack)
+      );
+    }else{
+      const NewServicePack = {
+        code: ramdomcode(12),
+        name: data.name,
+        startdate: data.startdate,
+        starttime: data.starttime,
+        deadlinedate: data.deadlinedate,
+        deadlinetime: data.deadlinetime,
+        // startdate:`${NewServicePack.startdate.date()}/${NewServicePack.startdate.month()}/${NewServicePack.startdate.year()}`,
+        // starttime:`${NewServicePack.starttime.hour()}:${NewServicePack.starttime.minute()}:${NewServicePack.starttime.second()}`,
+        // deadlinedate:`${NewServicePack.deadlinedate.date()}/${NewServicePack.deadlinedate.month()}/${NewServicePack.deadlinedate.year()}`,
+        // deadlinetime:`${NewServicePack.deadlinetime.hour()}:${NewServicePack.deadlinetime.minute()}:${NewServicePack.deadlinetime.second()}`,
+        price: data.price,
+        pricecombo: data.pricecombo,
+        quantity: data.quantity,
+        status: data.status,
+      };
+      // console.log(data);
 
-    // console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
-      // dispatch(
-
-      //   addNewServicePack(data)
-      // );
-
+      // console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
+      dispatch(addNewServicePack(NewServicePack));
+    }
+ 
     setOpen(false);
     setFormData(DEFAULT_MODAL);
 
@@ -57,9 +66,12 @@ console.log(data);
     setOpen(true)
   }
   const onUpdate = async (id:any) => {
-    const res = await getDoc(doc(db, "servicepacks",`${id}`))
-    // setFormData(res.data());
-    console.log(res.data());
+    // const res = await getDoc(doc(db, "servicepacks",`${id}`))
+    const data = servicepacklist.find((servicepack:any) => servicepack.id === id)
+    console.log(data);
+
+    setFormData(data);
+    
     setOpen(true)
   }
   const onCancel = () => { 
@@ -70,10 +82,11 @@ console.log(data);
   return (
     <div>
       <Headbar>
-      <ButtonCreate >Xuất file(.csv)</ButtonCreate>
+      <SearchBox />
+
+        <ButtonFile >Xuất file(.csv)</ButtonFile>
 
         <ButtonCreate onClick={onCreate}>Thêm gói vé</ButtonCreate>
-        <SearchBox />
         <ModalFormServicePack formData={formData} open={open} onSubmit={onSubmit} onCancel={onCancel} loading={formLoading}/>
 
       </Headbar>

@@ -6,29 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useState } from 'react';
+import Filters from '../Filters';
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = [ 'Đã đối soát', 'Chưa đối soát'];
 const TableTicketCheck = () => {
-    const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
-    const [indeterminate, setIndeterminate] = useState(true);
-    const [checkAll, setCheckAll] = useState(false);
+
   
-    const navigate = useNavigate();
-    const [form] = Form.useForm();
-      const onChange = (list: CheckboxValueType[]) => {
-        setCheckedList(list);
-        setIndeterminate(!!list.length && list.length < plainOptions.length);
-        setCheckAll(list.length === plainOptions.length);
-      };
-    
-      const onCheckAllChange = (e: CheckboxChangeEvent) => {
-        setCheckedList(e.target.checked ? plainOptions : []);
-        setIndeterminate(false);
-        setCheckAll(e.target.checked);
-      };
-      const handleChange = (value: { value: string; label: React.ReactNode }) => {
-        console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
-      };
+
     const columns =[
         {
             title: 'STT',
@@ -84,62 +68,7 @@ const TableTicketCheck = () => {
         <ButtonCreate>Xuất file(.csv)</ButtonCreate>
         <Row>
           <Col span={6} push={18}>
-            <Form form={form} layout="vertical">
-              <Form.Item
-                label="Loại vé"
-                name="services_used"
-                style={{ width: "85%" }}
-              >
-                <Checkbox
-                  indeterminate={indeterminate}
-                  onChange={onCheckAllChange}
-                  checked={checkAll}
-                >
-                  Tất cả
-                </Checkbox>
-                <CheckboxGroup
-                  options={plainOptions}
-                  value={checkedList}
-                  onChange={onChange}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Loại vé"
-                name="services_used"
-                style={{ width: "85%" }}
-              >
-                <Select
-                  defaultValue={{ value: '0', label: 'Vé cổng' }}
-                  onChange={handleChange}
-                  style={{ width: 200 }}
-                  options={[
-                    {
-                      value: '0',
-                      label: 'Vé cổng',
-                    },
-                    {
-                      value: '1',
-                      label: 'Vé VIP',
-                    },
-                  ]}
-                />
-              </Form.Item>
-              {/* <Form.Item
-                label="Từ ngày"
-                name="services_used"
-                style={{ width: "85%" }}
-              >
-                <DatePicker renderExtraFooter={() => "extra footer"} showTime />
-              </Form.Item>
-              <Form.Item
-                label="Đến ngày"
-                name="services_used"
-                style={{ width: "85%" }}
-              >
-                <DatePicker renderExtraFooter={() => "extra footer"} showTime />
-              </Form.Item> */}
-              <SubmitButton>Lọc</SubmitButton>
-            </Form>
+          <Filters/>
           </Col>
           <Col span={18} pull={6}>
             <TableCustom
