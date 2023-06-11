@@ -2,17 +2,25 @@ import { UserOutlined,ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Table, Modal, Form, DatePicker, Checkbox, Divider, Row, Col, Select } from "antd";
 import { TableCustom, ButtonAction, ButtonCreate, SubmitButton } from '../../Styles/styles';
 import SearchBox from '../../SearchBox';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useState } from 'react';
 import Filters from '../Filters';
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = [ 'Đã đối soát', 'Chưa đối soát'];
-const TableTicketCheck = () => {
-
-  
-
+interface Props{
+    options?:any
+    loading?:any
+    ticketList1?:any
+    ticketList2?:any
+  }
+const TableTicketCheck = ({options,loading,ticketList1,ticketList2}:Props) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log(ticketList1);
+    console.log(ticketList2);
+    
     const columns =[
         {
             title: 'STT',
@@ -20,74 +28,101 @@ const TableTicketCheck = () => {
             key: 'stt'
         },
         {
-            title: 'Số vế',
-            dataIndex: '',
-            key: ''
+            title: 'Số vé',
+            dataIndex: 'id',
+            key: 'id'
         },
         {
             title: 'Tên sự kiện',
-            dataIndex: 'name',
-            key: 'name'
+            dataIndex: 'nameevent',
+            key: 'nameevent'
         },
         {
             title: 'Ngày sử dụng',
-            key: ''
+            dataIndex: 'dateused',
+            key: 'dateused'
         },
         {
-            title: 'Tên loại vé',
-            dataIndex: '',
-            key: ''
+            title: 'Loại vé',
+            dataIndex: 'type',
+            key: 'type'
         },
-        {
-            title: 'Giá vé',
-            dataIndex: 'price',
-            key: 'price'
-        },
+
         {
             title: 'Cổng check-in',
-            dataIndex: 'description',
-            key: 'description',
+            dataIndex: 'gate',
+            key: 'gate',
         },
         {
-            title: '',
-            dataIndex: 'status',
-            key: 'status',
+            title: 'Đối soát',
+            dataIndex: 'statuscheck ',
+            key: 'statuscheck ',
             render: (_:any,item:any) =>{
-                return(
-                    <div>
-                        <ButtonAction >Cập nhật</ButtonAction>
-                    </div>
-                )
+                if (item.statuscheck) {
+                    return <div>Đã đối soát</div>;
+                }else{
+                    return <div>Chưa đối soát</div>
+                }
             }
         },
     ]
+    const columns2 =[
+        {
+            title: 'STT',
+            dataIndex: 'stt',
+            key: 'stt'
+        },
+        {
+            title: 'Số vé',
+            dataIndex: 'id',
+            key: 'id'
+        },
+        {
+            title: 'Ngày sử dụng',
+            dataIndex: 'dateused',
+            key: 'dateused'
+        },
+        {
+            title: 'Loại vé',
+            dataIndex: 'type',
+            key: 'type'
+        },
 
+        {
+            title: 'Cổng check-in',
+            dataIndex: 'gate',
+            key: 'gate',
+        },
+        {
+            title: 'Đối soát',
+            dataIndex: 'statuscheck',
+            key: 'statuscheck',
+            render: (_:any,item:any) =>{
+                if (item.statuscheck) {
+                    return <div>Đã đối soát</div>;
+                }else{
+                    return <div>Chưa đối soát</div>
+
+                }
+            }
+        },
+    ]
     return (
-      <div>
-        <SearchBox />
-        <ButtonCreate>Xuất file(.csv)</ButtonCreate>
-        <Row>
-          <Col span={6} push={18}>
-          <Filters/>
-          </Col>
-          <Col span={18} pull={6}>
             <TableCustom
-              columns={columns}
-              // dataSource={number}
-              // loading={loading}
+              columns={options==1? columns:columns2}
+              dataSource={options == 1 ? ticketList1 : ticketList2}
+              loading={loading}
               scroll={{ y: 430 }}
-              //     onChange={(pagination:any) => {
-              //         const searchParams = new URLSearchParams(location.search);
-              //         searchParams.set("page",pagination.current);
-              //         searchParams.set("limit",pagination.pageSize);
+                  onChange={(pagination:any) => {
+                      const searchParams = new URLSearchParams(location.search);
+                      searchParams.set("page",pagination.current);
+                      searchParams.set("limit",pagination.pageSize);
 
-              //         navigate(`${location.pathname}?${searchParams.toString()}`);
-              //         // console.log(location)
-              // }}
+                      navigate(`${location.pathname}?${searchParams.toString()}`);
+                      // console.log(location)
+              }}
             />
-          </Col>
-        </Row>
-      </div>
+
     );
 }
 

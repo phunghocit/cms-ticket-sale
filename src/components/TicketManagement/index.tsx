@@ -5,7 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ticketListSelector, ticketsRemainingSelector } from '../../redux/selectors';
+import { ticketsRemainingSelector } from '../../redux/selectors';
 import { fetchTickets } from './TicketSlide';
 import { useAppDispatch } from '../../hook/redux';
 import TableTicketManagement from './TableTicketManagement';
@@ -19,9 +19,24 @@ const TicketManagement = () => {
   console.log(ticketList);
   const dispatch = useAppDispatch();
 
+  let ticketList1:any = [] // event
+  let ticketList2:any = [] //family
+  ticketList.forEach((tiket:any) => {
+    let count1 =0
+    let count2 =0
+    if (tiket.nameevent!="") {
+      ticketList1.push({...tiket,stt:++count1})
+    }else{
+      ticketList2.push({...tiket,stt:++count2})
+
+    }
+  });
+  console.log(ticketList1);
+  console.log(ticketList2);
 
   useEffect(() => {
     dispatch(fetchTickets());
+
   }, [])
 
   const changOptions =()=>{
@@ -37,11 +52,14 @@ const TicketManagement = () => {
       setLoading(true);
       setOptions(1);
       setLoading(false);
-  
     }
   }
 
   const onSubmit = () => {
+    setOpen(false);
+
+  }
+  const onCancel = () => {
     setOpen(false);
 
   }
@@ -57,8 +75,8 @@ const TicketManagement = () => {
       <SearchBox  />
       <ButtonCreate onClick={onFilter}>Lọc vé</ButtonCreate>
       <ButtonFile >Xuất file(.csv)</ButtonFile>
-      <TableTicketManagement loading={loading}  options={options}/>
-      <FilterTicketManagement open={open} onSubmit={onSubmit}  />
+      <TableTicketManagement loading={loading}  options={options} ticketList1={ticketList1} ticketList2={ticketList2}/>
+      <FilterTicketManagement onCancel={onCancel} open={open} onSubmit={onSubmit}  />
     </div>
   )
 }

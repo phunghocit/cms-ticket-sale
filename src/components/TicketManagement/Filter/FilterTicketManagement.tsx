@@ -1,9 +1,8 @@
-import { Form, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select } from 'antd'
+import { Form, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select, Modal } from 'antd'
 import React, { useState } from 'react'
 import { ModalCustom, SubmitButton } from '../../Styles/styles';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
-import Modal from 'react-modal';
 
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = [ 'Đã sử dụng', 'Chưa sử dụng','Hết hạn'];
@@ -11,8 +10,10 @@ const plainOptions2 = [ 'Cổng 1','Cổng 2','Cổng 3','Cổng 4','Cổng 5'];
 interface Props {
   open?:any
   onSubmit?:any
+  loading?:any
+  onCancel?:any
 }
-const FilterTicketManagement = ({open,onSubmit}:Props) =>  {
+const FilterTicketManagement = ({open,onSubmit,loading,onCancel}:Props) =>  {
   const [form] = Form.useForm();
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
   const [indeterminate, setIndeterminate] = useState(true);
@@ -49,7 +50,15 @@ const FilterTicketManagement = ({open,onSubmit}:Props) =>  {
 
 }
   return  (
-    <ModalCustom isOpen={open}  >
+    <Modal
+    confirmLoading={loading}
+    open={open}
+    onCancel={onCancel}
+    onOk={onCreate}
+    okText={'Lọc'}
+    cancelText={'Huỷ'}
+    title={'Lọc vé'}
+  >
       <Form form={form} layout="vertical">
         <Form.Item
           label="Từ ngày"
@@ -85,10 +94,10 @@ const FilterTicketManagement = ({open,onSubmit}:Props) =>  {
         </Checkbox>
         <CheckboxGroup options={plainOptions2} value={checkedList2} onChange={onChange2} />
         </Form.Item>
-        <SubmitButton onClick={onSubmit}>Lọc</SubmitButton>
 
       </Form>
-    </ModalCustom>
+      </Modal>
+
   );
 }
 

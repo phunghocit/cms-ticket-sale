@@ -6,8 +6,8 @@ import Layout from "./layouts"
 import Dasboard from "./components/Dashboard"
 import TicketManagement from './components/TicketManagement';
 import ModalServicePack from './components/ServicePack/Modal/ModalFormServicePack';
-import TableServicePack from './components/ServicePack';
-import TableTicketCheck from './components/TicketCheck/Table/TableTicketCheck';
+import ServicePack from './components/ServicePack';
+import TicketCheck from './components/TicketCheck';
 import FilterTicketManagement from './components/TicketManagement/Filter/FilterTicketManagement';
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
             element={<FilterTicketManagement />}
           />
           <Route />
-          <Route path="/TicketCheck" element={<TableTicketCheck />} />
-          <Route path="/ServicePack/Table" element={<TableServicePack />} />
+          <Route path="/TicketCheck" element={<TicketCheck />} />
+          <Route path="/ServicePack/Table" element={<ServicePack />} />
 
           <Route />
         </Routes>

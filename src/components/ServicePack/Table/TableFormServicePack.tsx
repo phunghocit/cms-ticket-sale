@@ -13,9 +13,10 @@ import edit from '../../../shared/icon/edit.png';
 interface Props {
     servicepacklist?:any
     onUpdate?:any
+    loading:any
   }
 
-const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
+const TableFormServicePack = ({loading,servicepacklist,onUpdate}:Props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -125,6 +126,8 @@ const TableFormServicePack = ({servicepacklist,onUpdate}:Props) => {
         <div>
     <TableCustom 
         columns={columns} 
+        loading={loading}
+
         dataSource={servicepacklist} 
         // loading={loading} 
         scroll={{y: 430}}

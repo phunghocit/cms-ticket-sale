@@ -35,6 +35,7 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
       if(!open){
           form.resetFields();
       }
+      form.setFieldsValue(formData);
   },[open])
 
   useEffect(()=>{
@@ -49,6 +50,9 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
       open={open}
       onCancel={onCancel}
       onOk={onCreate}
+      okText={'Lưu'}
+      cancelText={'Huỷ'}
+      
     >
       <Form form={form} layout="vertical">
         {formData.id ? (

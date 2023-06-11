@@ -23,8 +23,12 @@ const ServicePack = () => {
   console.log(servicepacklist);
 
   useEffect(() => {
+    setFormLoading(true);
+
     dispatch(fetchServicePack());
-  }, []);
+    setFormLoading(false);
+
+  }, [formLoading]);
 
   const onSubmit = (id:any,data:any) => {
     setFormLoading(true);
@@ -34,6 +38,7 @@ const ServicePack = () => {
       dispatch(
         updateServicePack(NewServicePack)
       );
+
     }else{
       const NewServicePack = {
         code: ramdomcode(12),
@@ -56,7 +61,7 @@ const ServicePack = () => {
       // console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
       dispatch(addNewServicePack(NewServicePack));
     }
- 
+    setFormLoading(false);
     setOpen(false);
     setFormData(DEFAULT_MODAL);
 
@@ -90,7 +95,7 @@ const ServicePack = () => {
         <ModalFormServicePack formData={formData} open={open} onSubmit={onSubmit} onCancel={onCancel} loading={formLoading}/>
 
       </Headbar>
-      <TableFormServicePack servicepacklist={servicepacklist} onUpdate={onUpdate}/>
+      <TableFormServicePack servicepacklist={servicepacklist} onUpdate={onUpdate} loading={formLoading}/>
     </div>
   );
 }

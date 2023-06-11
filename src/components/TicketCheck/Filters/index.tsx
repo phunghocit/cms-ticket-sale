@@ -1,6 +1,7 @@
 import { Col, Row, Input, Typography, Radio, Select, Tag, Form, Checkbox } from 'antd';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../hook/redux';
+
 // import { priorityFilterChange, searchFilterChange, statusFilterChange } from '../../redux/actions';
 import filtersSlice from './filtersSlice';
 import { SubmitButton } from '../../Styles/styles';
@@ -9,40 +10,43 @@ import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 const { Search } = Input;
+interface Props{
+  options?:any
+}
 
-export default function Filters() {
-  const dispatch = useDispatch();
+const Filters = ({options}:Props) => {
+  const dispatch = useAppDispatch();
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
   const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
+  const [SearchType, setSearchType] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const [filterPriorities, setFilterPriorities] = useState([]);
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
   
 
-    const handleChange = (value: { value: string; label: React.ReactNode }) => {
-      console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    const handleTypeChange = (type: { value: number; label: React.ReactNode }) => {
+      console.log(type); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+      setSearchType(type.value);
     };
     
   const handleSearchTextChange = (e:any) => {
     setSearchText(e.target.value);
-    dispatch(filtersSlice.actions.searchFilterChange(e.target.value));
   };
 
   const handleStatusChange = (e:any) => {
     setFilterStatus(e.target.value);
-    dispatch(filtersSlice.actions.statusFilterChange(e.target.value));
   };
 
-  const handlePriorityChange = (value:any) => {
-    setFilterPriorities(value);
-    dispatch(filtersSlice.actions.prioritiesFilterChange(value));
-  }
 
+  const CreateFilter =(e:any)=>{
+    dispatch(filtersSlice.actions.searchFilterChange(searchText));
+    dispatch(filtersSlice.actions.statusFilterChange(filterStatus));
+    dispatch(filtersSlice.actions.statusFilterChange(SearchType));
+    
+  }
   return (
     <Form form={form} layout="vertical">
       <Typography.Paragraph
@@ -50,6 +54,15 @@ export default function Filters() {
       >
         Lọc vé
       </Typography.Paragraph>
+      {options==1 ?(
+        <Search
+        placeholder='Nhập tên sự kiện'
+        value={searchText}
+        onChange={handleSearchTextChange}
+      />
+        ) : (
+          ""
+        )}
       <Form.Item
         label="Tình trạng đối soát"
         name="ticket_status"
@@ -57,22 +70,22 @@ export default function Filters() {
       >
         <Radio.Group value={filterStatus} onChange={handleStatusChange}>
           <Radio value="All">Tất cả</Radio>
-          <Radio value="Completed">Đã đối soát</Radio>
-          <Radio value="Todo">Chưa đối soát</Radio>
+          <Radio value="Checked">Đã đối soát</Radio>
+          <Radio value="Uncheck">Chưa đối soát</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="Loại vé" name="services_used" style={{ width: "85%" }}>
+      <Form.Item label="Loại vé" name="typeticket" style={{ width: "85%" }}>
         <Select
-          defaultValue={{ value: "0", label: "Vé cổng" }}
-          onChange={handleChange}
+          defaultValue={{ value: 0, label: "Vé cổng" }}
+          onChange={handleTypeChange}
           style={{ width: 200 }}
           options={[
             {
-              value: "0",
+              value: 0,
               label: "Vé cổng",
             },
             {
-              value: "1",
+              value: 1,
               label: "Vé VIP",
             },
           ]}
@@ -92,7 +105,7 @@ export default function Filters() {
       >
         <Input type="date" />
       </Form.Item>
-      <SubmitButton>Lọc</SubmitButton>
+      <SubmitButton onClick={CreateFilter}>Lọc</SubmitButton>
     </Form>
     // <Row justify='center'>
     //   <Col span={24}>
@@ -147,3 +160,5 @@ export default function Filters() {
     // </Row>
   );
 }
+
+export default Filters

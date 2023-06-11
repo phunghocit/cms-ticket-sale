@@ -20,13 +20,13 @@ const ServicePackSlide = createSlice({
         state.servicepacks = action.payload;
         state.status = 'idle';
       })
-      .addCase(addNewServicePack.fulfilled, (state:any, action:any) => {
-        state.servicepacks.push( action.payload);
-      })
-      .addCase(updateServicePack.fulfilled, (state:any, action:any) => {
-        let currentservicepack = state.servicepacks.find((servicepack:any) => servicepack.id === action.payload);
-        currentservicepack = action.payload;
-      })
+      // .addCase(addNewServicePack.fulfilled, (state:any, action:any) => {
+      //   state.servicepacks.push( action.payload);
+      // })
+      // .addCase(updateServicePack.fulfilled, (state:any, action:any) => {
+      //   let currentservicepack = state.servicepacks.find((servicepack:any) => servicepack.id === action.payload);
+      //   currentservicepack = action.payload;
+      // })
       // .addCase(updateServicePack.fulfilled, (state, { payload }) => {
       //   state.entities[payload.id] = payload})
 
@@ -38,6 +38,8 @@ export const fetchServicePack= createAsyncThunk('servicepacks/fetchServicePack',
   const res = await getDocs(docRef);
   let newservicepack: any = [];
   let count = 1;
+  console.log(res);
+  
   res.forEach( async (doc) => {
       newservicepack.push({...doc.data(),id:doc.id,stt:count++}); 
       console.log(doc.id, " => ", doc.data());

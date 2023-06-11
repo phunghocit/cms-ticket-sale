@@ -37,7 +37,7 @@ export default createSlice({
   initialState: {
     search: '',
     status: 'All',
-    priorities: [],
+    typeticket: 0,
   },
   reducers: {
     searchFilterChange: (state, action) => {
@@ -47,36 +47,9 @@ export default createSlice({
     statusFilterChange: (state, action) => {
       state.status = action.payload;
     },
-    prioritiesFilterChange: (state, action) => {
-      state.priorities = action.payload;
+    typeFilterChange: (state, action) => {
+      state.typeticket = action.payload;
     },
   },
 });
-/**
- * => (payload) => {
- *  return {
- *    type: 'filters/searchFilterChange',
- *    payload: payload
- *  }
- * }
- * 
- * 
- * 
- * => {
- *  reducer,
- *  actions
- * }
- * action => object
- * 
- * {
- *  type: 'abc',
- *  payload: value
- * }
- * 
- * action creator => function :  () => {
- *  return {
- *    type: 'abc',
- *    payload: value
- * }
- * }
-*/
+

@@ -11,17 +11,12 @@ import { useAppDispatch } from '../../../hook/redux';
 interface Props{
   options?:any
   loading?:any
+  ticketList1?:any
+  ticketList2?:any
 }
-const TableTicketManagement = ({options,loading}:Props) => {
-  // const [ticket, setTicket] = useState([]);
+const TableTicketManagement = ({options,loading,ticketList1,ticketList2}:Props) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const ticketList = useSelector(ticketsRemainingSelector);
-  console.log(ticketList);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchTickets());
-  }, [])
   const columns =[
     {
         title: 'STT',
@@ -40,29 +35,57 @@ const TableTicketManagement = ({options,loading}:Props) => {
     },
     {
         title: 'Tên sự kiện',
-        dataIndex: 'event',
-        key: 'event'
+        dataIndex: 'nameevent',
+        key: 'nameevent'
     },
     {
       title: 'Tình trạng sử dụng',
-      dataIndex: 'status',
-      key: 'status'
+      dataIndex: 'statusused',
+      key: 'statusused ',
+      render: (_:any,item:any) =>{
+          if (item.statusused==='expired') {
+        return(
+          <div>Hết hạn</div>
+        )
+            
+          }else if (item.statusused==='used') {
+            return(
+              <div>Đã sử dụng</div>
+            )
+          }else{
+            return(
+              <div>Chưa sử dụng</div>
+            )
+          }
+    }
     },
     {
         title: 'Ngày sử dụng',
-        dataIndex: 'timeused',
-        key: 'timeused'
+        dataIndex: 'dateused',
+        key: 'dateused'
     },
     {
         title: 'Ngày xuất vé',
-        dataIndex: 'timesell',
-        key: 'timesell'
+        dataIndex: 'datesell',
+        key: 'timesdatesellell'
     },
     {
         title: 'Cổng check-in',
         dataIndex: 'gate',
         key: 'gate',
     },
+    {
+      title: '',
+      dataIndex: 'status',
+      key: 'status',
+      render: (_:any,item:any) =>{
+          return(
+              <div>
+                  <ButtonAction >Cập nhật</ButtonAction>
+              </div>
+          )
+      }
+  },
 ]
 const columns2 =[
   {
@@ -82,48 +105,71 @@ const columns2 =[
   },
   {
     title: 'Tình trạng sử dụng',
-    dataIndex: 'status',
-    key: 'status'
+    dataIndex: 'statusused',
+    key: 'statusused',
+    render: (_:any,item:any) =>{
+      if (item.statusused==='expired') {
+    return(
+      <div>Hết hạn</div>
+    )
+        
+      }else if (item.statusused==='used') {
+        return(
+          <div>Đã sử dụng</div>
+        )
+      }else{
+        return(
+          <div>Chưa sử dụng</div>
+        )
+      }
+}
   },
   {
       title: 'Ngày sử dụng',
-      dataIndex: 'timeused',
-      key: 'timeused'
+      dataIndex: 'dateused',
+      key: 'dateused'
   },
   {
       title: 'Ngày xuất vé',
-      dataIndex: 'timesell',
-      key: 'timesell'
+      dataIndex: 'datesell',
+      key: 'datesell'
   },
   {
       title: 'Cổng check-in',
       dataIndex: 'gate',
       key: 'gate',
   },
+  {
+    title: '',
+    dataIndex: 'status',
+    key: 'status',
+    render: (_:any,item:any) =>{
+        return(
+            <div>
+                <ButtonAction >Cập nhật</ButtonAction>
+            </div>
+        )
+    }
+},
 ]
 
   return (
-    <div>
-
-
+    <TableCustom
       
-    <TableCustom 
-      
-        columns={options==1? columns:columns2} 
-        dataSource={ticketList} 
-        loading={loading} 
-        scroll={{y: 430}}
-        onChange={(pagination:any) => {
-            const searchParams = new URLSearchParams(location.search);
-            searchParams.set("page",pagination.current);
-            searchParams.set("limit",pagination.pageSize);
+      columns={options == 1 ? columns : columns2}
+      dataSource={options == 1 ? ticketList1 : ticketList2}
+      loading={loading}
+      scroll={{ y: 430 }}
+      onChange={(pagination: any) => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set("page", pagination.current);
+        searchParams.set("limit", pagination.pageSize);
 
-            navigate(`${location.pathname}?${searchParams.toString()}`);
-            // console.log(location)
-    }}
-    /> 
-    </div>
-  )
+        navigate(`${location.pathname}?${searchParams.toString()}`);
+        // console.log(location)
+      }}
+    />
+  );
 }
 
 export default TableTicketManagement
