@@ -33,24 +33,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export default createSlice({
-  name: 'filters',
+  name: 'filterscomponent',
   initialState: {
-    searchName: '',
-    status: 'All',
-    typeticket: 0,
+    search: '',
   },
   reducers: {
     searchFilterChange: (state, action) => {
       // mutation || IMMER
-      state.searchName = action.payload;
+      state.search = action.payload;
     },
-    statusFilterChange: (state, action) => {
-      state.status = action.payload;
-    },
-    typeFilterChange: (state, action) => {
-      state.typeticket = action.payload;
-    },
+
   },
-  
 });
 

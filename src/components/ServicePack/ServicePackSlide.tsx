@@ -111,6 +111,31 @@ export const addNewServicePack = createAsyncThunk(
   => todos/fetchTodos/fullfilled
   => todos/fetchTodos/rejected
 */
+// export const searchFilterChange= createAsyncThunk('filters/searchFilterChange', 
+// async (data:any) => {
+//   const docRef = collection(db, "tickets"); //tra ve collection
+//   const res = await getDocs(docRef);
+//   let newticket: any = [];
+
+//   res.forEach( async (doc) => {
+//     if (data.status=='All' && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket ) {
+//     newticket.push({...doc.data()}); 
+      
+//     }else if (data.status=='Checked' && doc.data().statuscheck==true && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket ) {
+//       newticket.push({...doc.data()}); 
+//     }else if (data.status=='Uncheck' && doc.data().statuscheck==false && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket) {
+//       newticket.push({...doc.data()}); 
+//     }
+//     else{
+
+//     }
+//     // console.log(doc.id, " => ", doc.data());
+//     console.log(newticket);
+//   });
+// // const data = newticket;
+// // console.log(data);
+// return newticket;
+// });
 
 export default ServicePackSlide;
 

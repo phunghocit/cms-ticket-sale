@@ -5,18 +5,24 @@ import { ButtonCreate } from '../Styles/styles'
 import { Col, Input, Row } from 'antd'
 import Filters from './Filters'
 import {  useSelector } from 'react-redux';
-import { ticketsRemainingSelector } from '../../redux/selectors';
+import { ticketsRemainingSelector, ticketsSelector } from '../../redux/selectors';
 import { fetchTickets } from '../TicketManagement/TicketSlide';
 import { useAppDispatch } from '../../hook/redux';
+import filtersComponentSlide from '../filtersComponentSlide'
 import filtersSlice from './Filters/filtersSlice'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '../../firebase/firebase-config'
 const { Search } = Input;
 
 const TicketCheck = () => {
     const [options, setOptions] = useState(0); // 0:family 1:event 
     const [loading, setLoading] = useState(false);
     const [searchText, setSearchText] = useState('');
-
-    const ticketList = useSelector(ticketsRemainingSelector);
+    const [filter, setFilter] = useState(false);
+    // const [SearchType, setSearchType] = useState(0);
+    // const [searchName, setSearchName] = useState('');
+    // const [filterStatus, setFilterStatus] = useState('All');
+    const ticketList =  useSelector(ticketsRemainingSelector);
     const dispatch = useAppDispatch();
     let ticketList1:any = [] // event
     let ticketList2:any = [] //family
@@ -54,8 +60,16 @@ const TicketCheck = () => {
       }
       const handleSearchTextChange = (e:any) => {
         setSearchText(e.target.value);
-        dispatch(filtersSlice.actions.searchFilterChange(e.target.value));
+        dispatch(filtersComponentSlide.actions.searchFilterChange(e.target.value));
       };
+      const CreateFilter =(searchName:any, filterStatus:any, SearchType:any)=>{
+        setFilter(true)
+        dispatch(filtersSlice.actions.searchFilterChange(searchName));
+        dispatch(filtersSlice.actions.statusFilterChange(filterStatus));
+        dispatch(filtersSlice.actions.statusFilterChange(SearchType));
+        
+      }
+
   return (
     <div>
       <a href="#" onClick={changOptions}>
@@ -72,7 +86,7 @@ const TicketCheck = () => {
       <ButtonCreate>Xuất file(.csv)</ButtonCreate>
       <Row>
         <Col span={6} push={18}>
-          <Filters options={options} />
+          <Filters CreateFilter={CreateFilter} filter={filter} options={options} />
         </Col>
         <Col span={18} pull={6}>
           <TableTicketCheck loading={loading}  options={options} ticketList1={ticketList1} ticketList2={ticketList2} />

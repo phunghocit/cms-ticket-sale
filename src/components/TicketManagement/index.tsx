@@ -10,24 +10,29 @@ import { fetchTickets } from './TicketSlide';
 import { useAppDispatch } from '../../hook/redux';
 import TableTicketManagement from './TableTicketManagement';
 import FilterTicketManagement from './Filter/FilterTicketManagement';
+import { Input } from 'antd';
+import filtersComponentSlide from '../filtersComponentSlide';
+const { Search } = Input;
 
 const TicketManagement = () => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState('');
   const ticketList = useSelector(ticketsRemainingSelector);
   console.log(ticketList);
   const dispatch = useAppDispatch();
 
   let ticketList1:any = [] // event
   let ticketList2:any = [] //family
+  let count1 =1
+  let count2 =1
   ticketList.forEach((tiket:any) => {
-    let count1 =0
-    let count2 =0
+
     if (tiket.nameevent!="") {
-      ticketList1.push({...tiket,stt:++count1})
+      ticketList1.push({...tiket,stt:count1++})
     }else{
-      ticketList2.push({...tiket,stt:++count2})
+      ticketList2.push({...tiket,stt:count2++})
 
     }
   });
@@ -66,13 +71,21 @@ const TicketManagement = () => {
   const onFilter = () => {
     setOpen(true)
   }
+  const handleSearchTextChange = (e:any) => {
+    setSearchText(e.target.value);
+    dispatch(filtersComponentSlide.actions.searchFilterChange(e.target.value));
+  };
   return (
     <div>
       <a href="#" onClick={changOptions}>Gói gia đình</a>
       <a href="#" onClick={changOptions1}>Gói sự kiện</a>
       {/* <ButtonCreate  ></ButtonCreate>
       <ButtonCreate  ></ButtonCreate> */}
-      <SearchBox  />
+        <Search
+        placeholder='Nhập số vé'
+        value={searchText}
+        onChange={handleSearchTextChange}
+      />
       <ButtonCreate onClick={onFilter}>Lọc vé</ButtonCreate>
       <ButtonFile >Xuất file(.csv)</ButtonFile>
       <TableTicketManagement loading={loading}  options={options} ticketList1={ticketList1} ticketList2={ticketList2}/>

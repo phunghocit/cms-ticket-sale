@@ -9,7 +9,7 @@ import { addNewServicePack, fetchServicePack, updateServicePack } from './Servic
 import { useAppDispatch } from '../../hook/redux';
 import { servicepackRemainingSelector } from '../../redux/selectors';
 import { ramdomcode } from '../randomcode';
-import { doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 
 const DEFAULT_MODAL={code: "",name:"",startdate:"",starttime:"",deadlinedate:"",deadlinetime:"",price:"",pricecombo:"",quantity:"",status:""}
@@ -66,7 +66,21 @@ const ServicePack = () => {
     setFormData(DEFAULT_MODAL);
 
   }
-
+  const Create =async ()=>{
+    const rest = await addDoc(collection(db, "tickets"), {             
+      // code: uuidv4().slice(0, 12),
+      code: `ALT${ramdomcode(8)}`,
+      datesell: "11/04/2021",
+      dateused:"20/05/2021",
+      gate:4,
+      id:ramdomcode(12),
+      nameevent:"",
+      statuscheck: true,
+      statusused:"unused",
+      type: "Vé cổng",
+    })
+    
+  }
   const onCreate = () => {
     setOpen(true)
   }
@@ -88,6 +102,7 @@ const ServicePack = () => {
     <div>
       <Headbar>
       <SearchBox />
+      <ButtonCreate onClick={Create}>Tạo</ButtonCreate>
 
         <ButtonFile >Xuất file(.csv)</ButtonFile>
 
