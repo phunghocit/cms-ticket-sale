@@ -29,11 +29,11 @@ export const fetchTickets= createAsyncThunk('tickets/fetchTickets', async () => 
   let newticket: any = [];
   res.forEach( async (doc) => {
       newticket.push({...doc.data()}); 
-      console.log(doc.id, " => ", doc.data());
-      console.log(newticket);
+      // console.log(doc.id, " => ", doc.data());
+      // console.log(newticket);
     });
   const data = newticket;
-  console.log(data);
+  // console.log(data);
   return data;
 });
 

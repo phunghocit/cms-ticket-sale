@@ -1,9 +1,18 @@
-import React from 'react'
+import { Row } from "antd"
+import AreaChart from "./AreaChart"
+import DoughnutChart from "./DoughnutChart"
 
 const Dashboard = () => {
+
   return (
     <div>
-      Đây là trang chủ Dashboard
+      <Row > 
+      <AreaChart/>
+      </Row>
+      <Row> 
+      <DoughnutChart/>
+
+      </Row>
     </div>
   )
 }

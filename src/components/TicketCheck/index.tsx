@@ -26,13 +26,14 @@ const TicketCheck = () => {
     const dispatch = useAppDispatch();
     let ticketList1:any = [] // event
     let ticketList2:any = [] //family
+    let count1 =1
+    let count2 =1
     ticketList.forEach((tiket:any) => {
-      let count1 =0
-      let count2 =0
+
       if (tiket.nameevent!="") {
-        ticketList1.push({...tiket,stt:++count1})
+        ticketList1.push({...tiket,stt:count1++})
       }else{
-        ticketList2.push({...tiket,stt:++count2})
+        ticketList2.push({...tiket,stt:count2++})
   
       }
     });
