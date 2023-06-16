@@ -40,7 +40,7 @@ const TicketCheck = () => {
     console.log(ticketList1);
     console.log(ticketList2);
     useEffect(() => {
-        dispatch(fetchTickets());
+        dispatch(fetchTickets("tickets"));
     
       }, [])
     const changOptions =()=>{

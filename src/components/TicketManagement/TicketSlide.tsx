@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import { message } from 'antd';
 
@@ -19,22 +19,31 @@ const TicketSlide = createSlice({
         state.tickets = action.payload;
         state.status = 'idle';
       })
-
   },
 });
 
-export const fetchTickets= createAsyncThunk('tickets/fetchTickets', async () => {
-  const docRef = collection(db, "tickets"); //tra ve collection
+export const fetchTickets= createAsyncThunk('tickets/fetchTickets', async (name:string) => {
+  const docRef = collection(db, name); //tra ve collection
   const res = await getDocs(docRef);
   let newticket: any = [];
   res.forEach( async (doc) => {
-      newticket.push({...doc.data()}); 
+      newticket.push({...doc.data(),ticketId:doc.id}); 
       // console.log(doc.id, " => ", doc.data());
       // console.log(newticket);
     });
   const data = newticket;
   // console.log(data);
   return data;
+});
+export const editTickets= createAsyncThunk('ticketList/editTickets', async (data:any) => {
+  console.log(data.deadline,data.TicketId);
+  
+  const res =await updateDoc(doc(db, "tickets",`${data.TicketId}`), {
+    deadline:data.deadline
+  })
+console.log(res);
+
+  return res;
 });
 
 export default TicketSlide;

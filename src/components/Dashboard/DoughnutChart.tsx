@@ -14,7 +14,7 @@ const DoughnutChart = () => {
 const dispatch = useAppDispatch();
 
 useEffect(() => {
-  dispatch(fetchTickets());
+  dispatch(fetchTickets("tickets"));
 
 }, [])
 console.log(ticketList);

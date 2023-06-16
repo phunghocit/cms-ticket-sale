@@ -8,13 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ticketListSelector, ticketsRemainingSelector } from '../../../redux/selectors';
 import { fetchTickets } from '../TicketSlide';
 import { useAppDispatch } from '../../../hook/redux';
+import edit from '../../../shared/icon/Vector.png'
+
 interface Props{
   options?:any
   loading?:any
   ticketList1?:any
   ticketList2?:any
+  onEdit?:any
 }
-const TableTicketManagement = ({options,loading,ticketList1,ticketList2}:Props) => {
+const TableTicketManagement = ({onEdit,options,loading,ticketList1,ticketList2}:Props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const columns =[
@@ -40,23 +43,45 @@ const TableTicketManagement = ({options,loading,ticketList1,ticketList2}:Props) 
     },
     {
       title: 'Tình trạng sử dụng',
-      dataIndex: 'statusused',
-      key: 'statusused ',
-      render: (_:any,item:any) =>{
-          if (item.statusused==='expired') {
-        return(
-          <div>Hết hạn</div>
-        )
+      dataIndex: '',
+      key: ' ',
+      // render: (_:any,item:any) =>{
+      //     if (item.statusused==='expired') {
+      //   return(
+      //     <div>Hết hạn</div>
+      //   )
             
-          }else if (item.statusused==='used') {
-            return(
-              <div>Đã sử dụng</div>
-            )
-          }else{
-            return(
-              <div>Chưa sử dụng</div>
-            )
-          }
+      //     }else if (item.statusused==='used') {
+      //       return(
+      //         <div>Đã sử dụng</div>
+      //       )
+      //     }else{
+      //       return(
+      //         <div>Chưa sử dụng</div>
+      //       )
+      //     }
+      // }
+      render: (_:any,item:any) =>{
+        const timeElapsed = Date();
+        const today = new Date(timeElapsed)
+          console.log(today);
+        if (item.dateused !='' && item.deadline > today.toLocaleDateString()) {
+      return(
+        <div>Đã sử dụng</div>
+
+      )
+          
+        }else if (item.dateused ==='' && item.deadline < today.toLocaleDateString()) {
+          console.log(Date.now());
+          
+          return(
+            <div>Hết hạn</div>
+          )
+        }else{
+          return(
+            <div>Chưa sử dụng</div>
+          )
+        }
     }
     },
     {
@@ -79,11 +104,19 @@ const TableTicketManagement = ({options,loading,ticketList1,ticketList2}:Props) 
       dataIndex: 'status',
       key: 'status',
       render: (_:any,item:any) =>{
+        if (item.statusused==='unused') {
           return(
-              <div>
-                  <ButtonAction >Cập nhật</ButtonAction>
-              </div>
+            <a href="#" onClick={()=>{onEdit(item.id)}}><img src={edit}/></a>
+
           )
+        }
+        else{
+          return(
+            <div>
+            </div>
+          )
+        }
+
       }
   },
 ]
@@ -144,11 +177,19 @@ const columns2 =[
     dataIndex: 'status',
     key: 'status',
     render: (_:any,item:any) =>{
+      if (item.statusused==='unused') {
         return(
-            <div>
-                <ButtonAction >Cập nhật</ButtonAction>
-            </div>
+          <a href="#" onClick={()=>{onEdit(item.id)}}><img src={edit}/></a>
+
         )
+      }
+      else{
+        return(
+          <div>
+          </div>
+        )
+      }
+
     }
 },
 ]
