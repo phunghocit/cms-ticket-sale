@@ -67,9 +67,9 @@ const TicketManagement = () => {
     setOpen(false);
     console.log(data);
     
-    dispatch(filtersTicketSlice.actions.dateFilterChange(data.date));
-    dispatch(filtersTicketSlice.actions.statusFilterChange(data.checkedList));
-    dispatch(filtersTicketSlice.actions.gateFilterChange(data.checkedList2));
+    dispatch(filtersTicketSlice.actions.dateFilterChange(data[0]));
+    dispatch(filtersTicketSlice.actions.statusFilterChange(data[1]));
+    dispatch(filtersTicketSlice.actions.gateFilterChange(data[2]));
 
   }
   const onSubmitEdit = (id:any,data:any) => {

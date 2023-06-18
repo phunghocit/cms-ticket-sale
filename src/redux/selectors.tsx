@@ -27,12 +27,10 @@ export const ticketsRemainingSelector = createSelector(
   gateSelector,
   (ticketList:any,searchText:any,date:any,status:any,gate:any) => {
     console.log(date);
-    console.log(status);
-    console.log(gate);
     
     return ticketList.filter((ticket:any) => {
       return (
-         ticket.id.includes(searchText)
+        (date.length > 0 ? ticket.datesell >= date[0] && ticket.datesell <= date[1] :ticket ) && ticket.id.includes(searchText)
       );
     });
   }
