@@ -10,6 +10,7 @@ import { servicepackRemainingSelector } from '../../../redux/selectors';
 import { fetchServicePack } from '../ServicePackSlide';
 import { useAppDispatch } from '../../../hook/redux';
 import edit from '../../../shared/icon/edit.png';
+import { CONVERT } from '../../convertDate';
 interface Props {
     servicepacklist?:any
     onUpdate?:any
@@ -43,7 +44,7 @@ const TableFormServicePack = ({loading,servicepacklist,onUpdate}:Props) => {
             render: (_:any,item:any) =>{
                 return(
                     <div>
-                        {item.startdate} {item.starttime}
+                        {CONVERT(item.startdate)} {item.starttime}
                             {/* {item.startdate.date}/{item.startdate.month}/{item.startdate.year} {item.starttime.hour}:{item.starttime.minute}:{item.starttime.second} */}
                     </div>
                 )
@@ -57,7 +58,7 @@ const TableFormServicePack = ({loading,servicepacklist,onUpdate}:Props) => {
             render: (_:any,item:any) =>{
                 return(
                     <div>
-                        {item.deadlinedate} {item.deadlinetime}
+                        {CONVERT(item.deadlinedate)} {item.deadlinetime}
                             {/* {item.deadlinedate.getDate()}/{item.deadlinedate.month()}/{item.deadlinedate.year()} {item.deadlinetime.hour()}:{item.deadlinetime.minute()}:{item.deadlinetime.second()} */}
                     </div>
                 )

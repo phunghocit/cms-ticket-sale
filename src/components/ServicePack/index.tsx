@@ -11,7 +11,7 @@ import { servicepackRemainingSelector } from '../../redux/selectors';
 import { ramdomcode } from '../randomcode';
 import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
-
+import { CONVERT } from '../convertDate'
 const DEFAULT_MODAL={code: "",name:"",startdate:"",starttime:"",deadlinedate:"",deadlinetime:"",price:"",pricecombo:"",quantity:"",status:""}
 const ServicePack = () => {
   const [open, setOpen] = useState(false);
@@ -20,6 +20,8 @@ const ServicePack = () => {
   const [formLoading, setFormLoading] = useState(false);
   const dispatch = useAppDispatch();
   const servicepacklist = useSelector(servicepackRemainingSelector);
+// let formatter = new Intl.DateTimeFormat("af");
+
   console.log(servicepacklist);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const ServicePack = () => {
         quantity: data.quantity,
         status: data.status,
       };
-      // console.log(data);
+      console.log(data);
 
       // console.log(`${data.starttime.hour()}:${data.starttime.minute()}:${data.starttime.second()} `);
       dispatch(addNewServicePack(NewServicePack));
@@ -68,15 +70,44 @@ const ServicePack = () => {
   }
   const Create =async ()=>{
     const rest = await addDoc(collection(db, "tickets"), {             
-      // code: uuidv4().slice(0, 12),
+      // code: `ALT${ramdomcode(8)}`,
+      // datesell: "11/06/2023",
+      // dateused:"",
+      // deadline:"25/06/2023",
+      // gate:"",
+      // id:ramdomcode(12),
+      // nameevent:"Hội chợ triển lãm tiêu dùng 2023",
+      // statuscheck: false,
+      // type: "Vé cổng",
+
+      // code: `ALT${ramdomcode(8)}`,
+      // datesell: "11/06/2023",
+      // dateused:"",
+      // deadline:"25/06/2023",
+      // gate:"",
+      // id:ramdomcode(12),
+      // nameevent:"Hội chợ triển lãm 2023",
+      // statuscheck: false,
+      // type: "Vé cổng",
+
+      // code: `ALT${ramdomcode(8)}`,
+      // datesell: "2023-06-11",
+      // dateused:"",
+      // deadline:"2023-06-25",
+      // gate:"",
+      // id:ramdomcode(12),
+      // nameevent:"",
+      // statuscheck: false,
+      // type: "Vé cổng",
+
       code: `ALT${ramdomcode(8)}`,
-      datesell: "11/04/2022",
-      dateused:"",
-      gate:"",
+      datesell: "2023-06-11",
+      dateused:"2023-06-18",
+      deadline:"2023-06-18",
+      gate:"2",
       id:ramdomcode(12),
-      nameevent:"Hội chợ triển lãm tiêu dùng 2022",
+      nameevent:"",
       statuscheck: true,
-      statusused:"unused",
       type: "Vé cổng",
     })
     

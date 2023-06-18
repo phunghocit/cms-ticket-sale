@@ -30,7 +30,7 @@ const DetailTicketManagement = ({formData,open,onSubmit,loading,onCancel}:Props)
       onOk={onCreate}
       okText={"Lưu"}
       cancelText={"Huỷ"}
-      title={"Đởi ngày sử dụng vé"}
+      title={"Đổi ngày sử dụng vé"}
     >
         <Descriptions
           column={{ md: 1 }}
@@ -52,7 +52,7 @@ const DetailTicketManagement = ({formData,open,onSubmit,loading,onCancel}:Props)
           )}
           <Descriptions.Item label="Hạn sử dụng">
             
-            <Input type="date"  name='deadline' onChange={onChange} defaultValue= {formData.deadline}/>
+            <Input type="date"  name='deadline' onChange={onChange} formTarget='DD MM YYYY'   defaultValue= {formData.deadline}/>
           </Descriptions.Item>
 
         </Descriptions>

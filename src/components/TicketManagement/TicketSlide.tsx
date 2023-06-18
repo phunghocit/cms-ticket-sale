@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import { message } from 'antd';
+import { CONVERT } from '../convertDate';
 
 const TicketSlide = createSlice({
   name: 'ticketList',
@@ -39,7 +40,7 @@ export const editTickets= createAsyncThunk('ticketList/editTickets', async (data
   console.log(data.deadline,data.TicketId);
   
   const res =await updateDoc(doc(db, "tickets",`${data.TicketId}`), {
-    deadline:data.deadline
+    deadline:CONVERT(data.deadline)
   })
 console.log(res);
 
