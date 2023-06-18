@@ -37,7 +37,7 @@ export default createSlice({
   initialState: {
     searchName: '',
     status: 'All',
-    typeticket: 0,
+    date:[],
   },
   reducers: {
     searchFilterChange: (state, action) => {
@@ -47,8 +47,8 @@ export default createSlice({
     statusFilterChange: (state, action) => {
       state.status = action.payload;
     },
-    typeFilterChange: (state, action) => {
-      state.typeticket = action.payload;
+    dateFilterChange: (state, action) => {
+      state.date = action.payload;
     },
   },
   

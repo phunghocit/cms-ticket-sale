@@ -18,33 +18,25 @@ interface Props{
   ticketList2?:any
   onEdit?:any
 }
-interface Date {
-  mm: number,
-  dd: number,
-  yy: number,
-  yyyy: number,
-
-}
 const TableTicketManagement = ({onEdit,options,loading,ticketList1,ticketList2}:Props) => {
   const location = useLocation();
   const navigate = useNavigate();
-//   const formatDate=(date:any, format:any):Date=>{
-//     const map = {
-//         mm: date.getMonth() + 1,
-//         dd: date.getDate(),
-//         yy: date.getFullYear().toString().slice(-2),
-//         yyyy: date.getFullYear()
-//     }
+  const [startDate,setStartDate]= useState(new Date());
+  const [endDate,setEndDate]= useState(new Date());
 
-//     return format.replace(/mm|dd|yy|yyy/gi, (matched:any) => map[matched])
-// }
-// console.log(DATE_CONVERT("23/11/2023"));
 
+
+  let count =1
   const columns =[
     {
         title: 'STT',
-        dataIndex: 'stt',
-        key: 'stt'
+        dataIndex: '',
+        key: '',
+        render: (_:any,item:any) =>{
+          return(
+            <div>{count++}</div>
+          )
+        }
     },
     {
       title: 'Booking code',
@@ -65,39 +57,14 @@ const TableTicketManagement = ({onEdit,options,loading,ticketList1,ticketList2}:
       title: 'Tình trạng sử dụng',
       dataIndex: '',
       key: ' ',
-      // render: (_:any,item:any) =>{
-      //     if (item.statusused==='expired') {
-      //   return(
-      //     <div>Hết hạn</div>
-      //   )
-            
-      //     }else if (item.statusused==='used') {
-      //       return(
-      //         <div>Đã sử dụng</div>
-      //       )
-      //     }else{
-      //       return(
-      //         <div>Chưa sử dụng</div>
-      //       )
-      //     }
-      // }
       render: (_:any,item:any) =>{
         const today = Date();
-        // const today = new Date(timeElapsed)
-          // console.log(today.toLocaleDateString('en-US', {
-          //   year: 'numeric',
-          //   month: '2-digit',
-          //   day: '2-digit',
-          // }));
+
           console.log(CONVERT(today));
           
         if (item.dateused !='' ) {
-      return(
-        <div>Đã sử dụng</div>
-      )
+          return <div>Đã sử dụng</div>;
         }else if (item.dateused ==='' && CONVERT(item.deadline) < CONVERT(today)) {
-          console.log(Date.now());
-          
           return(
             <div>Hết hạn</div>
           )
@@ -123,15 +90,25 @@ const TableTicketManagement = ({onEdit,options,loading,ticketList1,ticketList2}:
                   <div></div>
               )
           }
-
-          
       }
 
     },
     {
         title: 'Ngày xuất vé',
         dataIndex: 'datesell',
-        key: 'timesdatesellell'
+        key: 'datesell',
+        render: (_:any,item:any) =>{
+          if (item.datesell != '') {
+              return(
+                  <div>{CONVERT(item.datesell)}</div>
+              )
+              
+          }else{
+              return(
+                  <div></div>
+              )
+          }
+      }
     },
     {
         title: 'Cổng check-in',
@@ -165,8 +142,13 @@ const TableTicketManagement = ({onEdit,options,loading,ticketList1,ticketList2}:
 const columns2 =[
   {
       title: 'STT',
-      dataIndex: 'stt',
-      key: 'stt'
+      dataIndex: '',
+      key: '',
+      render: (_:any,item:any) =>{
+        return(
+          <div>{count++}</div>
+        )
+      }
   },
   {
     title: 'Booking code',
@@ -224,7 +206,19 @@ const columns2 =[
   {
       title: 'Ngày xuất vé',
       dataIndex: 'datesell',
-      key: 'datesell'
+      key: 'datesell',
+      render: (_:any,item:any) =>{
+        if (item.datesell != '') {
+            return(
+                <div>{CONVERT(item.datesell)}</div>
+            )
+            
+        }else{
+            return(
+                <div></div>
+            )
+        }
+    }
   },
   {
       title: 'Cổng check-in',

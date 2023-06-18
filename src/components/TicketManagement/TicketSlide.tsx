@@ -46,6 +46,16 @@ console.log(res);
 
   return res;
 });
+export const filterTicket= createAsyncThunk('ticketList/filterTicket', async (data:any) => {
+  console.log(data.deadline,data.TicketId);
+  
+  const res =await updateDoc(doc(db, "tickets",`${data.TicketId}`), {
+    deadline:CONVERT(data.deadline)
+  })
+console.log(res);
+
+  return res;
+});
 
 export default TicketSlide;
 

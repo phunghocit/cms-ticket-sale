@@ -1,6 +1,6 @@
 export const CONVERT = (date:string)=>{
     const today = new Date(date)
-    return today.toLocaleDateString('en-US', {
+    return today.toLocaleDateString('en-GB', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',

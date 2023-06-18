@@ -1,4 +1,4 @@
-import { Col, Row, Input, Typography, Radio, Select, Tag, Form, Checkbox } from 'antd';
+import { Col, Row, Input, Typography, Radio, Select, Tag, Form, Checkbox, DatePicker } from 'antd';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../hook/redux';
 
@@ -15,6 +15,7 @@ interface Props{
   filter?:any
   CreateFilter:any
 }
+const { RangePicker } = DatePicker
 
 const Filters = ({options,CreateFilter}:Props) => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,16 @@ const Filters = ({options,CreateFilter}:Props) => {
   const [indeterminate, setIndeterminate] = useState(true);
   const [searchName, setSearchName] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
+  const [date,setDate]= useState([]);
+
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
   
 
+console.log(searchName);
+console.log(filterStatus);
+console.log(date);
 
     
   const handleSearchTextChange = (e:any) => {
@@ -39,7 +45,7 @@ const Filters = ({options,CreateFilter}:Props) => {
 
 
   const handleSubmit =()=>{
-    CreateFilter(searchName,filterStatus)
+    CreateFilter(searchName,filterStatus,date)
     
   }
   return (
@@ -78,15 +84,19 @@ const Filters = ({options,CreateFilter}:Props) => {
         name="services_used_start"
         style={{ width: "85%" }}
       >
-        <Input type="date" />
+        {/* <Input type="date" /> */}
+        < RangePicker
+            format={"DD/MM/YYYY"}
+        onChange={(values:any) => {
+        //  console.log(values);
+          setDate((values != null ? values.map((item:any)=>{
+            return  item.format('YYYY-MM-DD')
+          }):'')
+            )}}
+
+      />
       </Form.Item>
-      <Form.Item
-        label="Đến ngày"
-        name="services_used_end"
-        style={{ width: "85%" }}
-      >
-        <Input type="date" />
-      </Form.Item>
+
       <SubmitButton onClick={handleSubmit}>Lọc</SubmitButton>
     </Form>
     </div>

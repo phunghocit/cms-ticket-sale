@@ -1,9 +1,8 @@
 import { Form, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select, Modal } from 'antd'
 import React, { useState } from 'react'
-import { ModalCustom, SubmitButton } from '../../Styles/styles';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
-
+const { RangePicker } = DatePicker
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = [ 'Đã sử dụng', 'Chưa sử dụng','Hết hạn'];
 const plainOptions2 = [ 'Cổng 1','Cổng 2','Cổng 3','Cổng 4','Cổng 5'];
@@ -21,6 +20,11 @@ const FilterTicketManagement = ({open,onSubmit,loading,onCancel}:Props) =>  {
   const [checkedList2, setCheckedList2] = useState<CheckboxValueType[]>([]);
   const [indeterminate2, setIndeterminate2] = useState(true);
   const [checkAll2, setCheckAll2] = useState(false);
+  const [date,setDate]= useState([]);
+console.log(checkedList);
+console.log(checkedList2);
+console.log(date);
+console.log([date,checkedList,checkedList2]);
 
   
   const onChange = (list: CheckboxValueType[]) => {
@@ -45,59 +49,85 @@ const FilterTicketManagement = ({open,onSubmit,loading,onCancel}:Props) =>  {
     setIndeterminate2(false);
     setCheckAll2(e.target.checked);
   };
+  
+
   const onCreate = async () => {
     const data = await form.validateFields();
-
+    onSubmit([date,checkedList,checkedList2])
 }
-  return  (
+
+
+  return (
     <Modal
-    confirmLoading={loading}
-    open={open}
-    onCancel={onCancel}
-    onOk={onCreate}
-    okText={'Lọc'}
-    cancelText={'Huỷ'}
-    title={'Lọc vé'}
-  >
+      confirmLoading={loading}
+      open={open}
+      onCancel={onCancel}
+      onOk={onCreate}
+      okText={"Lọc"}
+      cancelText={"Huỷ"}
+      title={"Lọc vé"}
+    >
       <Form form={form} layout="vertical">
-        <Form.Item
-          label="Từ ngày"
-          name="time"
-          rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
-        >
-          <DatePicker renderExtraFooter={() => "extra footer"} showTime />
+        <Form.Item label="Lọc theo ngày" name="time">
+          {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
+          < RangePicker
+            format={"DD/MM/YYYY"}
+            onChange={(values:any) => {
+               console.log(values);
+                setDate((values != null ? values.map((item:any)=>{
+                  return  item.format('YYYY-MM-DD')
+                }):'')
+                  )}}
+
+      />
+
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Đến ngày"
           name="deadline"
           rules={[{ required: true, message: "Mã sản phẩm là bắt buộc!" }]}
         >
-          <DatePicker renderExtraFooter={() => "extra footer"} showTime />
-        </Form.Item>
+          <RangePicker />
+          
+        </Form.Item> */}
         <Form.Item
           label="Tình trạng sử dụng"
           name="services_used"
           style={{ width: "85%" }}
         >
-          <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-          Tất cả
-        </Checkbox>
-        <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Tất cả
+          </Checkbox>
+          <CheckboxGroup
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChange}
+          />
         </Form.Item>
         <Form.Item
           label="Cổng Check-in"
           name="services_used"
           style={{ width: "85%" }}
         >
-          <Checkbox indeterminate={indeterminate2} onChange={onCheckAllChange2} checked={checkAll2}>
-          Tất cả
-        </Checkbox>
-        <CheckboxGroup options={plainOptions2} value={checkedList2} onChange={onChange2} />
+          <Checkbox
+            indeterminate={indeterminate2}
+            onChange={onCheckAllChange2}
+            checked={checkAll2}
+          >
+            Tất cả
+          </Checkbox>
+          <CheckboxGroup
+            options={plainOptions2}
+            value={checkedList2}
+            onChange={onChange2}
+          />
         </Form.Item>
-
       </Form>
-      </Modal>
-
+    </Modal>
   );
 }
 

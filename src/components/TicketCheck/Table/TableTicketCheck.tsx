@@ -41,7 +41,17 @@ const TableTicketCheck = ({options,loading,ticketList1,ticketList2}:Props) => {
         {
             title: 'Ngày sử dụng',
             dataIndex: 'dateused',
-            key: 'dateused'
+            key: 'dateused',
+            render: (_:any,item:any) =>{
+                if (item.dateused != '') {
+                    return(
+                        <div>{CONVERT(item.dateused)}</div>
+                    )
+                }
+                return(
+                    <div></div>
+                )
+            }
         },
         {
             title: 'Loại vé',

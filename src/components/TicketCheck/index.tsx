@@ -22,7 +22,7 @@ const TicketCheck = () => {
     // const [SearchType, setSearchType] = useState(0);
     // const [searchName, setSearchName] = useState('');
     // const [filterStatus, setFilterStatus] = useState('All');
-    const ticketList =  useSelector(ticketsRemainingSelector);
+    const ticketList =  useSelector(ticketsSelector);
     const dispatch = useAppDispatch();
     let ticketList1:any = [] // event
     let ticketList2:any = [] //family
@@ -63,11 +63,11 @@ const TicketCheck = () => {
         setSearchText(e.target.value);
         dispatch(filtersComponentSlide.actions.searchFilterChange(e.target.value));
       };
-      const CreateFilter =(searchName:any, filterStatus:any, SearchType:any)=>{
+      const CreateFilter =(searchName:any, filterStatus:any,date:any)=>{
         setFilter(true)
         dispatch(filtersSlice.actions.searchFilterChange(searchName));
         dispatch(filtersSlice.actions.statusFilterChange(filterStatus));
-        dispatch(filtersSlice.actions.statusFilterChange(SearchType));
+        dispatch(filtersSlice.actions.dateFilterChange(date));
         
       }
 

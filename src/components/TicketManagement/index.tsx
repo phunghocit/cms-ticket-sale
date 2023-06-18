@@ -13,6 +13,7 @@ import FilterTicketManagement from './Filter/FilterTicketManagement';
 import { Input } from 'antd';
 import filtersComponentSlide from '../filtersComponentSlide';
 import DetailTicketManagement from './DetailTicketManagement';
+import filtersTicketSlice from './Filter/filtersTicketSlice';
 const { Search } = Input;
 
 const TicketManagement = () => {
@@ -28,27 +29,24 @@ const TicketManagement = () => {
 
   const dispatch = useAppDispatch();
 
-  let ticketList1:any = [] // event
-  let ticketList2:any = [] //family
-  let count1 =1
-  let count2 =1
-  ticketList.forEach((tiket:any) => {
-
-    if (tiket.nameevent!="") {
-      ticketList1.push({...tiket,stt:count1++})
-    }else{
-      ticketList2.push({...tiket,stt:count2++})
-
-    }
-  });
-  console.log(ticketList1);
-  console.log(ticketList2);
 
   useEffect(() => {
     dispatch(fetchTickets("tickets"));
 
   }, [])
+  let ticketList1:any = [] // event
+  let ticketList2:any = [] //family
+  ticketList.forEach((tiket:any) => {
 
+    if (tiket.nameevent!="") {
+      ticketList1.push({...tiket})
+    }else{
+      ticketList2.push({...tiket})
+
+    }
+  });
+  console.log(ticketList1);
+  console.log(ticketList2);
   const changOptions =()=>{
     if (options==1) {
       setLoading(true);
@@ -65,8 +63,13 @@ const TicketManagement = () => {
     }
   }
 
-  const onSubmit = () => {
+  const onSubmit = (data:any) => {
     setOpen(false);
+    console.log(data);
+    
+    dispatch(filtersTicketSlice.actions.dateFilterChange(data.date));
+    dispatch(filtersTicketSlice.actions.statusFilterChange(data.checkedList));
+    dispatch(filtersTicketSlice.actions.gateFilterChange(data.checkedList2));
 
   }
   const onSubmitEdit = (id:any,data:any) => {
