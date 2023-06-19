@@ -167,21 +167,18 @@ const columns2 =[
     render: (_:any,item:any) =>{
       const today = Date();
 
-        if (item.dateused !='' ) {
-          return(
-            <div>Đã sử dụng</div>
-          )
-            }else if (item.dateused ==='' && CONVERT(item.deadline) < CONVERT(today)) {
-              console.log(Date.now());
-              
-              return(
-                <div>Hết hạn</div>
-              )
-            }else{
-              return(
-                <div>Chưa sử dụng</div>
-              )
-            }
+        if (item.dateused != "") {
+          return <div>Đã sử dụng</div>;
+        } else if (
+          item.dateused === "" &&
+          CONVERT(item.deadline) < CONVERT(today)
+        ) {
+          console.log(Date.now());
+
+          return <div>Hết hạn</div>;
+        } else {
+          return <div>Chưa sử dụng</div>;
+        }
   }
   },
   {
