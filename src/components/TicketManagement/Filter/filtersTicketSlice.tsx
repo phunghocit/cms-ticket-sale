@@ -1,21 +1,18 @@
-
-
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export default createSlice({
-  name: 'filterticket',
+  name: "filterticket",
   initialState: {
-    date:[],
-    status:[],
-    gate:[],
+    date: [],
+    status: [],
+    gate: [],
   },
   reducers: {
     dateFilterChange: (state, action) => {
       console.log(action.payload);
-      
+
       state.date = action.payload;
       console.log(state.date);
-
     },
     statusFilterChange: (state, action) => {
       state.status = action.payload;
@@ -25,6 +22,4 @@ export default createSlice({
       state.gate = action.payload;
     },
   },
-  
 });
-

@@ -1,39 +1,37 @@
 import styled from "styled-components";
 import { Table, Button } from "antd";
 import Search from "antd/es/input/Search";
-import Modal from 'react-modal';
-
+import Modal from "react-modal";
 
 export const Headbar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
+`;
 
 export const SearchBox = styled(Search)`
   width: 40%;
   border: 1px solid transparent;
   font-size: 1rem;
-  
-  
-  input{
+
+  input {
     background-color: rgba(17, 25, 40, 0.73);
     color: pink;
     border: 1px solid transparent;
     font-weight: bold;
   }
 
-  button{
+  button {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
     background-color: rgba(17, 25, 40, 1);
     border: 1px solid transparent;
-    
-    svg{
+
+    svg {
       color: pink;
     }
   }
-`
+`;
 
 export const TableCustom = styled(Table)`
   margin-top: 1rem;
@@ -49,7 +47,7 @@ export const TableCustom = styled(Table)`
   .ant-table-thead .ant-table-cell {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
-    background-color: #F1F4F8;
+    background-color: #f1f4f8;
     /* color: white; */
   }
   .ant-table-tbody {
@@ -90,61 +88,58 @@ export const TableCustom = styled(Table)`
   }
 `;
 
-
-
 export const ButtonAction = styled(Button)`
-    margin-right: 10px;
-    font-weight: bold;
+  margin-right: 10px;
+  font-weight: bold;
 
-    :hover{
-      background-color: white;
-    }
+  :hover {
+    background-color: white;
+  }
 `;
 
 export const ButtonCreate = styled(Button)`
-  background-color:#FF993C;
-  border: 2px solid #FF993C !important;
+  background-color: #ff993c;
+  border: 2px solid #ff993c !important;
   font-weight: bold;
   color: white;
 
-  :hover{
+  :hover {
     background-color: white;
-    color: #FF993C !important;
+    color: #ff993c !important;
   }
-`
+`;
 export const ButtonFile = styled(Button)`
-  background-color:white;
-  border: 2px solid #FF993C !important;
+  background-color: white;
+  border: 2px solid #ff993c !important;
   font-weight: bold;
-  color:#FF993C;
+  color: #ff993c;
 
-  :hover{
+  :hover {
     background-color: white;
-    color: #FF993C !important;
+    color: #ff993c !important;
   }
-`
+`;
 export const SubmitButton = styled(Button)`
-    font-size: 1rem;
-    font-weight: bold;
-    height: auto;
-    width: auto;
-    padding: 0.25rem 1.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  height: auto;
+  width: auto;
+  padding: 0.25rem 1.25rem;
 
-    background:#4096ff;
-    color: white;
-    border: 2px solid #4096ff;
+  background: #4096ff;
+  color: white;
+  border: 2px solid #4096ff;
 
-    :hover{
-        color:#4096ff;
-        background: white;
-    }
-`
+  :hover {
+    color: #4096ff;
+    background: white;
+  }
+`;
 export const ModalCustom = styled(Modal)`
-/* display: flex; */
-position: 'absolute';
-background: #ffff;
-width: 30%; 
-justify-content: center;
-align-items: center;
-
-`
+  /* display: flex; */
+  position: "absolute";
+  background: #ffff;
+  width: 30%;
+  justify-content: center;
+  align-items: center;
+`;

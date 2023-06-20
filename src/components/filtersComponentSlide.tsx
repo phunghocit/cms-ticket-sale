@@ -30,19 +30,17 @@
 
 // export default filtersReducer;
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export default createSlice({
-  name: 'filterscomponent',
+  name: "filterscomponent",
   initialState: {
-    search: '',
+    search: "",
   },
   reducers: {
     searchFilterChange: (state, action) => {
       // mutation || IMMER
       state.search = action.payload;
     },
-
   },
 });
-

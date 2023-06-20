@@ -1,58 +1,73 @@
-import { Form,Modal, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select, TimePicker } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { addNewServicePack } from '../ServicePackSlide'
-import { Title } from '../../../layouts/styles';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../../firebase/firebase-config';
-import dayjs from 'dayjs';
-import { useParams } from 'react-router-dom';
+import {
+  Form,
+  Modal,
+  Input,
+  InputNumber,
+  DatePickerProps,
+  DatePicker,
+  Checkbox,
+  Select,
+  TimePicker,
+} from "antd";
+import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import { addNewServicePack } from "../ServicePackSlide";
+import { Title } from "../../../layouts/styles";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase/firebase-config";
+import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
 // dayjs.extend(customParseFormat);
 interface Props {
-  open?:any
-  onSubmit?:any
-  onCancel?:any
-  loading?:boolean
-  formData?:any
+  open?: any;
+  onSubmit?: any;
+  onCancel?: any;
+  loading?: boolean;
+  formData?: any;
 }
-const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) => {
-    const [form] = Form.useForm();
-    const dateFormat = 'DD/MM/YYYY';
-    const timeFormat = 'HH:mm:ss';
-    // const [ id ,setId] = useState();
+const ModalFormServicePack = ({
+  formData,
+  open,
+  onSubmit,
+  onCancel,
+  loading,
+}: Props) => {
+  const [form] = Form.useForm();
+  const dateFormat = "DD/MM/YYYY";
+  const timeFormat = "HH:mm:ss";
+  // const [ id ,setId] = useState();
 
-    const onChange = (e: CheckboxChangeEvent) => {
-        console.log(`checked = ${e.target.checked}`);
-      };
+  const onChange = (e: CheckboxChangeEvent) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
 
-    const onCreate = async () => {
-        const data = await form.validateFields();
-        //console.log(formData.id,data);
-        onSubmit(formData.id,data);
+  const onCreate = async () => {
+    const data = await form.validateFields();
+    //console.log(formData.id,data);
+    onSubmit(formData.id, data);
+  };
+  useEffect(() => {
+    if (!open) {
+      form.resetFields();
     }
-    useEffect(()=>{
-      if(!open){
-          form.resetFields();
-      }
-      form.setFieldsValue(formData);
-  },[open])
+    form.setFieldsValue(formData);
+  }, [open]);
 
-  useEffect(()=>{
-      if(open && formData.id){
-          form.setFieldsValue(formData);
-          console.log(formData);
-      }
-  },[open,formData])
+  useEffect(() => {
+    if (open && formData.id) {
+      form.setFieldsValue(formData);
+      console.log(formData);
+    }
+  }, [open, formData]);
   return (
     <Modal
       confirmLoading={loading}
       open={open}
       onCancel={onCancel}
       onOk={onCreate}
-      okText={'Lưu'}
-      cancelText={'Huỷ'}
-      
+      okText={"Lưu"}
+      cancelText={"Huỷ"}
     >
       <Form form={form} layout="vertical">
         {formData.id ? (
@@ -97,7 +112,7 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
           rules={[{ required: true, message: "Giờ áp dụng là bắt buộc!" }]}
         >
           <Input placeholder="hh-mm-ss" type="time" />
-          
+
           {/* <TimePicker placeholder="hh:mm:ss" format={timeFormat} /> */}
           {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
         </Form.Item>
@@ -151,6 +166,6 @@ const ModalFormServicePack = ({formData,open,onSubmit,onCancel,loading}:Props) =
       </Form>
     </Modal>
   );
-}
+};
 
-export default ModalFormServicePack
+export default ModalFormServicePack;

@@ -30,14 +30,14 @@
 
 // export default filtersReducer;
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export default createSlice({
-  name: 'filters',
+  name: "filters",
   initialState: {
-    searchName: '',
-    status: 'All',
-    date:[],
+    searchName: "",
+    status: "All",
+    date: [],
   },
   reducers: {
     searchFilterChange: (state, action) => {
@@ -51,6 +51,4 @@ export default createSlice({
       state.date = action.payload;
     },
   },
-  
 });
-

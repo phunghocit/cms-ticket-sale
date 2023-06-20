@@ -1,18 +1,32 @@
-import { Form, Input, InputNumber, DatePickerProps, DatePicker, Checkbox, Select, Modal } from 'antd'
-import React, { useState } from 'react'
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
-const { RangePicker } = DatePicker
+import {
+  Form,
+  Input,
+  InputNumber,
+  DatePickerProps,
+  DatePicker,
+  Checkbox,
+  Select,
+  Modal,
+} from "antd";
+import React, { useState } from "react";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import type { CheckboxValueType } from "antd/es/checkbox/Group";
+const { RangePicker } = DatePicker;
 const CheckboxGroup = Checkbox.Group;
-const plainOptions = [ 'Đã sử dụng', 'Chưa sử dụng','Hết hạn'];
-const plainOptions2 = [ 'Cổng 1','Cổng 2','Cổng 3','Cổng 4','Cổng 5'];
+const plainOptions = ["Đã sử dụng", "Chưa sử dụng", "Hết hạn"];
+const plainOptions2 = ["Cổng 1", "Cổng 2", "Cổng 3", "Cổng 4", "Cổng 5"];
 interface Props {
-  open?:any
-  onSubmit?:any
-  loading?:any
-  onCancel?:any
+  open?: any;
+  onSubmit?: any;
+  loading?: any;
+  onCancel?: any;
 }
-const FilterTicketManagement = ({open,onSubmit,loading,onCancel}:Props) =>  {
+const FilterTicketManagement = ({
+  open,
+  onSubmit,
+  loading,
+  onCancel,
+}: Props) => {
   const [form] = Form.useForm();
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
   const [indeterminate, setIndeterminate] = useState(true);
@@ -20,13 +34,12 @@ const FilterTicketManagement = ({open,onSubmit,loading,onCancel}:Props) =>  {
   const [checkedList2, setCheckedList2] = useState<CheckboxValueType[]>([]);
   const [indeterminate2, setIndeterminate2] = useState(true);
   const [checkAll2, setCheckAll2] = useState(false);
-  const [date,setDate]= useState([]);
-console.log(checkedList);
-console.log(checkedList2);
-console.log(date);
-console.log([date,checkedList,checkedList2]);
+  const [date, setDate] = useState([]);
+  console.log(checkedList);
+  console.log(checkedList2);
+  console.log(date);
+  console.log([date, checkedList, checkedList2]);
 
-  
   const onChange = (list: CheckboxValueType[]) => {
     setCheckedList(list);
     setIndeterminate(!!list.length && list.length < plainOptions.length);
@@ -49,13 +62,11 @@ console.log([date,checkedList,checkedList2]);
     setIndeterminate2(false);
     setCheckAll2(e.target.checked);
   };
-  
 
   const onCreate = async () => {
     const data = await form.validateFields();
-    onSubmit([date,checkedList,checkedList2])
-}
-
+    onSubmit([date, checkedList, checkedList2]);
+  };
 
   return (
     <Modal
@@ -70,17 +81,19 @@ console.log([date,checkedList,checkedList2]);
       <Form form={form} layout="vertical">
         <Form.Item label="Lọc theo ngày" name="time">
           {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
-          < RangePicker
+          <RangePicker
             format={"DD/MM/YYYY"}
-            onChange={(values:any) => {
-               console.log(values);
-                setDate((values != null ? values.map((item:any)=>{
-                  return  item.format('YYYY-MM-DD')
-                }):'')
-                  )}}
-
-      />
-
+            onChange={(values: any) => {
+              console.log(values);
+              setDate(
+                values != null
+                  ? values.map((item: any) => {
+                      return item.format("YYYY-MM-DD");
+                    })
+                  : ""
+              );
+            }}
+          />
         </Form.Item>
         {/* <Form.Item
           label="Đến ngày"
@@ -129,6 +142,6 @@ console.log([date,checkedList,checkedList2]);
       </Form>
     </Modal>
   );
-}
+};
 
-export default FilterTicketManagement
+export default FilterTicketManagement;
