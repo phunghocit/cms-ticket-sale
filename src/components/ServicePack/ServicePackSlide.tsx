@@ -13,8 +13,13 @@ import { v4 as uuidv4 } from "uuid";
 import { ramdomcode } from "../randomcode";
 const ServicePackSlide = createSlice({
   name: "servicepacklist",
-  initialState: { status: "idle", servicepacks: [] },
-  reducers: {},
+  initialState: { status: "idle", servicepacks: [],searchName: "" },
+  reducers: {
+    searchFilterChange: (state, action) => {
+      // mutation || IMMER
+      state.searchName = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchServicePack.pending, (state, action) => {
@@ -103,60 +108,4 @@ export const updateServicePack = createAsyncThunk(
     return res;
   }
 );
-// export const filterServicePack = createAsyncThunk(
-//   'servicepacks/filterServicePack',
-//   async (id:any) => {
-//     const res = await getDoc(doc(db, "servicepacks",`${id}`));
-//     const data =res.data()
-//     console.log(data);
-
-//     return data;
-//   }
-// );
-/*
-  => todos/fetchTodos/pending
-  => todos/fetchTodos/fullfilled
-  => todos/fetchTodos/rejected
-*/
-// export const searchFilterChange= createAsyncThunk('filters/searchFilterChange',
-// async (data:any) => {
-//   const docRef = collection(db, "tickets"); //tra ve collection
-//   const res = await getDocs(docRef);
-//   let newticket: any = [];
-
-//   res.forEach( async (doc) => {
-//     if (data.status=='All' && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket ) {
-//     newticket.push({...doc.data()});
-
-//     }else if (data.status=='Checked' && doc.data().statuscheck==true && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket ) {
-//       newticket.push({...doc.data()});
-//     }else if (data.status=='Uncheck' && doc.data().statuscheck==false && doc.data().nameevent.includes(data.searchName) && doc.data().type==data.typeticket) {
-//       newticket.push({...doc.data()});
-//     }
-//     else{
-
-//     }
-//     // console.log(doc.id, " => ", doc.data());
-//     console.log(newticket);
-//   });
-// // const data = newticket;
-// // console.log(data);
-// return newticket;
-// });
-
 export default ServicePackSlide;
-
-// action (object) va action creators () => { return action }
-// thunk action (function) va thunk action creators () => { return thunk action  }
-
-// export function addTodos(todo) { // thunk function - thunk action
-//   return function addTodosThunk(dispatch, getState) {
-//     console.log('[addTodosThunk]', getState());
-//     console.log({todo});
-//     // custom
-//     todo.name = 'Tung Test Updated';
-//     dispatch(todosSlice.actions.addTodo(todo));
-
-//     console.log('[addTodosThunk after]', getState())
-//   }
-// }

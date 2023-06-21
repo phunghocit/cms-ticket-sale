@@ -5,7 +5,7 @@ import TableFormServicePack from "./Table/TableFormServicePack";
 import { ButtonCreate, ButtonFile, Headbar } from "../Styles/styles";
 import SearchBox from "../SearchBox";
 import { useDispatch, useSelector } from "react-redux";
-import {
+import ServicePackSlide, {
   addNewServicePack,
   fetchServicePack,
   updateServicePack,
@@ -16,6 +16,7 @@ import { ramdomcode } from "../randomcode";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase-config";
 import { CONVERT } from "../convertDate";
+import { Input } from "antd";
 const DEFAULT_MODAL = {
   code: "",
   name: "",
@@ -28,10 +29,12 @@ const DEFAULT_MODAL = {
   quantity: "",
   status: "",
 };
+const { Search } = Input;
+
 const ServicePack = () => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<any>(DEFAULT_MODAL);
-
+  const [searchText, setSearchText] = useState("");
   const [formLoading, setFormLoading] = useState(false);
   const dispatch = useAppDispatch();
   const servicepacklist = useSelector(servicepackRemainingSelector);
@@ -140,10 +143,18 @@ const ServicePack = () => {
     setOpen(false);
     setFormData(DEFAULT_MODAL);
   };
+  const handleSearchTextChange = (e: any) => {
+    setSearchText(e.target.value);
+    dispatch(ServicePackSlide.actions.searchFilterChange(e.target.value));
+  };
   return (
     <div>
       <Headbar>
-        <SearchBox />
+      <Search
+        placeholder="Nhập mã gói vé"
+        value={searchText}
+        onChange={handleSearchTextChange}
+      />
         <ButtonCreate onClick={Create}>Tạo</ButtonCreate>
 
         <ButtonFile>Xuất file(.csv)</ButtonFile>
