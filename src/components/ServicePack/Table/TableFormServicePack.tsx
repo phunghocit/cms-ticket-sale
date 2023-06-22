@@ -1,6 +1,6 @@
 import { UserOutlined, ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, Table, Modal } from "antd";
-import { TableCustom, ButtonAction, ButtonCreate } from "../../Styles/styles";
+import { Button, Table, Modal, Badge } from "antd";
+import { TableCustom, ButtonAction, ButtonCreate, BadgeSuccess, BadgeError } from "../../Styles/styles";
 import SearchBox from "../../SearchBox";
 import { useLocation, useNavigate } from "react-router-dom";
 import ModalFormServicePack from "../Modal/ModalFormServicePack";
@@ -24,12 +24,17 @@ const TableFormServicePack = ({
 }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  let count = 1;
 
   const columns = [
     {
       title: "STT",
       dataIndex: "stt",
       key: "stt",
+      width: 70,
+      render: (_: any, item: any) => {
+        return <div>{count++}</div>;
+      },
     },
     {
       title: "Mã gói vé",
@@ -95,14 +100,15 @@ const TableFormServicePack = ({
     {
       title: "Tình trạng",
       dataIndex: "status",
-      key: "status",
+      key: "state",
       render: (_: any, item: any) => {
         if (item.status) {
-          return <div>Đang áp dụng</div>;
+          return <BadgeSuccess status="success" text="Đang áp dụng"/>;
         } else {
-          return <div>Tắt</div>;
+            return <BadgeError status="error" text="Tắt"/>;
         }
       },
+    // render: () => <Badge status="success" text="Finished" />,
     },
     {
       title: "",
@@ -130,6 +136,7 @@ const TableFormServicePack = ({
   return (
     <div>
       <TableCustom
+        rowKey={(record:any) => record.code}
         columns={columns}
         loading={loading}
         dataSource={servicepacklist}

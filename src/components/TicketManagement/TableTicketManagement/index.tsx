@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ButtonAction, ButtonCreate, TableCustom } from "../../Styles/styles";
+import { BadgeDefault, BadgeError, BadgeSuccess, ButtonAction, ButtonCreate, TableCustom } from "../../Styles/styles";
 import SearchBox from "../../SearchBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase/firebase-config";
@@ -13,6 +13,7 @@ import { fetchTickets } from "../TicketSlide";
 import { useAppDispatch } from "../../../hook/redux";
 import edit from "../../../shared/icon/Vector.png";
 import { CONVERT } from "../../convertDate";
+import { Tooltip } from "antd";
 
 interface Props {
   options?: any;
@@ -37,8 +38,9 @@ const TableTicketManagement = ({
   const columns = [
     {
       title: "STT",
-      dataIndex: "",
-      key: "",
+      dataIndex: "stt",
+      key: "stt",
+      width: 70,
       render: (_: any, item: any) => {
         return <div>{count++}</div>;
       },
@@ -47,6 +49,7 @@ const TableTicketManagement = ({
       title: "Booking code",
       dataIndex: "code",
       key: "code",
+      
     },
     {
       title: "Số vé",
@@ -57,25 +60,38 @@ const TableTicketManagement = ({
       title: "Tên sự kiện",
       dataIndex: "nameevent",
       key: "nameevent",
+      width: 250,
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (item:any) => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
     },
     {
       title: "Tình trạng sử dụng",
       dataIndex: "",
       key: "",
+      width: 150,
+
       render: (_: any, item: any) => {
+        
         const today = Date();
 
         console.log(CONVERT(today));
-
         if (item.dateused != "") {
-          return <div>Đã sử dụng</div>;
+          return <BadgeDefault status="default" text="Đã sử dụng"/>;
         } else if (
           item.dateused === "" &&
           CONVERT(item.deadline) < CONVERT(today)
         ) {
-          return <div>Hết hạn</div>;
+          console.log(Date.now());
+
+          return <BadgeError status="error" text="Hết hạn"/>;
         } else {
-          return <div>Chưa sử dụng</div>;
+          return <BadgeSuccess status="success" text="Chưa sử dụng"/>;
         }
       },
     },
@@ -107,11 +123,14 @@ const TableTicketManagement = ({
       title: "Cổng check-in",
       dataIndex: "gate",
       key: "gate",
+      width: 150,
+      
     },
     {
       title: "",
       dataIndex: "status",
       key: "status",
+      with:80,
       render: (_: any, item: any) => {
         // if (item.statusused==='unused') {
         const today = Date();
@@ -137,6 +156,7 @@ const TableTicketManagement = ({
       title: "STT",
       dataIndex: "",
       key: "",
+      width: 70,
       render: (_: any, item: any) => {
         return <div>{count++}</div>;
       },
@@ -159,16 +179,16 @@ const TableTicketManagement = ({
         const today = Date();
 
         if (item.dateused != "") {
-          return <div>Đã sử dụng</div>;
+          return <BadgeDefault status="default" text="Đã sử dụng"/>;
         } else if (
           item.dateused === "" &&
           CONVERT(item.deadline) < CONVERT(today)
         ) {
           console.log(Date.now());
 
-          return <div>Hết hạn</div>;
+          return <BadgeError status="error" text="Hết hạn"/>;
         } else {
-          return <div>Chưa sử dụng</div>;
+          return <BadgeSuccess status="success" text="Chưa sử dụng"/>;
         }
       },
     },

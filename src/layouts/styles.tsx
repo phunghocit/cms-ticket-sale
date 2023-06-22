@@ -54,7 +54,7 @@ export const DropdownMenuItem = styled(Dropdown)`
   backdrop-filter: blur(25px) saturate(200%);
   -webkit-backdrop-filter: blur(25px) saturate(200%);
   /* background-color: rgba(17, 25, 40, 0.73); */
-  border-radius: 12px;
+  border-radius: 5px;
   /* border: 1px solid rgba(255, 255, 255, 0.125); */
 
   display: flex;
@@ -74,11 +74,11 @@ export const DropdownMenuItem = styled(Dropdown)`
   }
 
   &.active {
-    background: #ff7506;
+    background: #FFB800;
   }
 
   :hover {
-    background: #ff7506;
+    background: #FFB800;
   }
 `;
 export const MenuItem = styled(NavLink)`
@@ -96,17 +96,18 @@ export const MenuItem = styled(NavLink)`
   padding: 0.8rem;
   transition: 3s ease;
   overflow: hidden !important;
+  text-decoration: none;
 
   svg {
     margin-right: 20px;
   }
 
-  :hover {
+  /* :hover {
     background: #ff7506;
-  }
+  } */
 
   &.active {
-    background-color: #ff7506 !important;
+    background-color: #FFB800 !important;
   }
 `;
 export const Logo = styled.a`

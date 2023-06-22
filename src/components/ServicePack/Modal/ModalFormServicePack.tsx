@@ -18,6 +18,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/firebase-config";
 import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
+import { CheckboxCustom, DivCheckBox, DivDateTime, FormCustom, ModalCustom } from "../../Styles/styles";
 // dayjs.extend(customParseFormat);
 interface Props {
   open?: any;
@@ -61,7 +62,7 @@ const ModalFormServicePack = ({
     }
   }, [open, formData]);
   return (
-    <Modal
+    <ModalCustom
       confirmLoading={loading}
       open={open}
       onCancel={onCancel}
@@ -69,7 +70,7 @@ const ModalFormServicePack = ({
       okText={"Lưu"}
       cancelText={"Huỷ"}
     >
-      <Form form={form} layout="vertical">
+      <FormCustom form={form} layout="vertical">
         {formData.id ? (
           <Form.Item
             label="Mã sự kiện"
@@ -98,24 +99,23 @@ const ModalFormServicePack = ({
             <Input placeholder="Nhập tên gói vé" />
           </Form.Item>
         )}
-
+        <DivDateTime>
+          
         <Form.Item
           label="Ngày áp dụng"
           name="startdate"
           rules={[{ required: true, message: "Ngày áp dụng là bắt buộc!" }]}
         >
           <Input type="date" />
-          {/* <DatePicker placeholder="dd/mm/yyyy" format={dateFormat} /> */}
         </Form.Item>
         <Form.Item
+          label=" "
           name="starttime"
-          rules={[{ required: true, message: "Giờ áp dụng là bắt buộc!" }]}
+          // rules={[{ required: true, message: "Giờ áp dụng là bắt buộc!" }]}
         >
           <Input placeholder="hh-mm-ss" type="time" />
-
-          {/* <TimePicker placeholder="hh:mm:ss" format={timeFormat} /> */}
-          {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
         </Form.Item>
+
         <Form.Item
           label="Ngày hết hạn"
           name="deadlinedate"
@@ -126,31 +126,45 @@ const ModalFormServicePack = ({
           {/* <DatePicker placeholder="dd/mm/yyyy" format={dateFormat} /> */}
         </Form.Item>
         <Form.Item
+          label=" "
           name="deadlinetime"
-          rules={[{ required: true, message: "Giờ hết hạn là bắt buộc!" }]}
+          // rules={[{ required: true, message: "Giờ hết hạn là bắt buộc!" }]}
         >
           <Input placeholder="hh-mm-ss" type="time" />
           {/* <TimePicker placeholder="hh:mm:ss" format={timeFormat} /> */}
         </Form.Item>
+        </DivDateTime>
 
-        <p>Giá vé áp dụng</p>
-        <Checkbox onChange={onChange}>
-          Vé lẻ (vnđ/vé) với giá
-          <Form.Item name="price">
-            <InputNumber placeholder="Giá vé" />
-          </Form.Item>
-          /vé
-        </Checkbox>
-        <Checkbox onChange={onChange}>
-          Combo vé với giá
-          <Form.Item name="pricecombo">
-            <InputNumber placeholder="Giá vé" />
-          </Form.Item>
-          <Form.Item name="quantity">
-            <InputNumber placeholder="Số vé" />
-          </Form.Item>
-          vé
-        </Checkbox>
+        <Form.Item
+          label="Giá vé áp dụng"
+
+        >
+
+        <CheckboxCustom onChange={onChange}>
+          <DivCheckBox>
+            Vé lẻ (vnđ/vé) với giá
+            <Form.Item name="price">
+              <InputNumber placeholder="Giá vé" />
+            </Form.Item>
+            /vé
+          </DivCheckBox>
+        </CheckboxCustom>
+
+        <CheckboxCustom onChange={onChange}>
+          <DivCheckBox>
+            Combo vé với giá
+            <Form.Item name="pricecombo">
+              <InputNumber placeholder="Giá vé" />
+            </Form.Item>
+            /
+            <Form.Item name="quantity">
+              <InputNumber placeholder="Số vé" width={30} />
+            </Form.Item>
+            vé
+          </DivCheckBox>
+        </CheckboxCustom>
+        </Form.Item>
+
         <Form.Item
           label="Tình trạng"
           name="status"
@@ -163,8 +177,8 @@ const ModalFormServicePack = ({
             ]}
           />
         </Form.Item>
-      </Form>
-    </Modal>
+      </FormCustom>
+    </ModalCustom>
   );
 };
 

@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
+import { ButtonFile, FormCustom } from "../../Styles/styles";
 const { RangePicker } = DatePicker;
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ["Đã sử dụng", "Chưa sử dụng", "Hết hạn"];
@@ -71,14 +72,10 @@ const FilterTicketManagement = ({
   return (
     <Modal
       confirmLoading={loading}
-      open={open}
-      onCancel={onCancel}
-      onOk={onCreate}
-      okText={"Lọc"}
-      cancelText={"Huỷ"}
+      footer={null}
       title={"Lọc vé"}
     >
-      <Form form={form} layout="vertical">
+      <FormCustom form={form} layout="vertical">
         <Form.Item label="Lọc theo ngày" name="time">
           {/* <DatePicker renderExtraFooter={() => "extra footer"} showTime /> */}
           <RangePicker
@@ -139,7 +136,9 @@ const FilterTicketManagement = ({
             onChange={onChange2}
           />
         </Form.Item>
-      </Form>
+      </FormCustom>
+      <ButtonFile onClick={onCreate}>Lọc</ButtonFile>
+
     </Modal>
   );
 };

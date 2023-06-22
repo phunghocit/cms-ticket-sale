@@ -48,11 +48,10 @@ export const fetchServicePack = createAsyncThunk(
     const docRef = collection(db, "servicepacks"); //tra ve collection
     const res = await getDocs(docRef);
     let newservicepack: any = [];
-    let count = 1;
     console.log(res);
 
     res.forEach(async (doc) => {
-      newservicepack.push({ ...doc.data(), id: doc.id, stt: count++ });
+      newservicepack.push({ ...doc.data(), id: doc.id});
       console.log(doc.id, " => ", doc.data());
       console.log(newservicepack);
     });

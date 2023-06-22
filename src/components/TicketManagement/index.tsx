@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
+  ACustom,
   ButtonAction,
   ButtonCreate,
   ButtonFile,
+  Headbar,
+  SearchCustom,
   TableCustom,
 } from "../Styles/styles";
 import SearchBox from "../SearchBox";
@@ -19,6 +22,9 @@ import { Input } from "antd";
 import filtersComponentSlide from "../filtersComponentSlide";
 import DetailTicketManagement from "./DetailTicketManagement";
 import filtersTicketSlice from "./Filter/filtersTicketSlice";
+import filter from "../../shared/icon/VectorFilter.png";
+import { NavLink } from "react-router-dom";
+
 const { Search } = Input;
 
 const TicketManagement = () => {
@@ -100,21 +106,28 @@ const TicketManagement = () => {
   };
   return (
     <div>
-      <a href="#" onClick={changOptions}>
-        Gói gia đình
-      </a>
-      <a href="#" onClick={changOptions1}>
-        Gói sự kiện
-      </a>
-      {/* <ButtonCreate  ></ButtonCreate>
-      <ButtonCreate  ></ButtonCreate> */}
-      <Search
-        placeholder="Nhập số vé"
-        value={searchText}
-        onChange={handleSearchTextChange}
-      />
-      <ButtonCreate onClick={onFilter}>Lọc vé</ButtonCreate>
-      <ButtonFile>Xuất file(.csv)</ButtonFile>
+      <div>
+        <ACustom href="#" onClick={changOptions}>
+          Gói gia đình
+        </ACustom>
+        <ACustom href="#" onClick={changOptions1}>
+          Gói sự kiện
+        </ACustom>
+      </div>
+      <Headbar>
+        <div >
+          <SearchCustom
+            placeholder="Nhập số vé"
+            value={searchText}
+            onChange={handleSearchTextChange}
+          />
+        </div>
+        <div>
+          <ButtonFile onClick={onFilter}>Lọc vé</ButtonFile>
+          <ButtonFile>Xuất file(.csv)</ButtonFile>
+        </div>
+      </Headbar>
+
       <TableTicketManagement
         onEdit={onEdit}
         loading={loading}

@@ -15,7 +15,7 @@ import { useAppDispatch } from "../../../hook/redux";
 
 // import { priorityFilterChange, searchFilterChange, statusFilterChange } from '../../redux/actions';
 // import filtersSlice from './filtersSlice';
-import { SubmitButton } from "../../Styles/styles";
+import { ButtonFilter, FilterForm, FormCustom, SubmitButton } from "../../Styles/styles";
 import { useNavigate } from "react-router-dom";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
@@ -55,8 +55,8 @@ const Filters = ({ options, CreateFilter }: Props) => {
     CreateFilter(searchName, filterStatus, date);
   };
   return (
-    <div>
-      <Form form={form} layout="vertical">
+    <FilterForm>
+      <FormCustom form={form} layout="vertical">
         <Typography.Paragraph
           style={{ fontWeight: "bold", marginBottom: 3, marginTop: 10 }}
         >
@@ -106,9 +106,9 @@ const Filters = ({ options, CreateFilter }: Props) => {
           />
         </Form.Item>
 
-        <SubmitButton onClick={handleSubmit}>Lọc</SubmitButton>
-      </Form>
-    </div>
+        <ButtonFilter onClick={handleSubmit}>Lọc</ButtonFilter>
+      </FormCustom>
+    </FilterForm>
   );
 };
 

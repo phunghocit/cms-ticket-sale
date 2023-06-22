@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { Table, Button } from "antd";
+import { Table, Button, Badge, Form, Checkbox, Modal } from "antd";
 import Search from "antd/es/input/Search";
-import Modal from "react-modal";
+import { NavLink } from "react-router-dom";
 
 export const Headbar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top:10px;
 `;
 
 export const SearchBox = styled(Search)`
@@ -34,8 +35,8 @@ export const SearchBox = styled(Search)`
 `;
 
 export const TableCustom = styled(Table)`
-  margin-top: 1rem;
 
+  margin-top: 1rem;
   .ant-table {
     backdrop-filter: blur(25px) saturate(200%);
     -webkit-backdrop-filter: blur(25px) saturate(200%);
@@ -87,7 +88,14 @@ export const TableCustom = styled(Table)`
     border-radius: 0 0 1rem 1rem;
   }
 `;
+export const FormCustom = styled(Form)`
+  margin-right: 10px;
+  .ant-form-item-label{
+    font-weight: bold;
 
+  }
+
+`;
 export const ButtonAction = styled(Button)`
   margin-right: 10px;
   font-weight: bold;
@@ -113,10 +121,21 @@ export const ButtonFile = styled(Button)`
   border: 2px solid #ff993c !important;
   font-weight: bold;
   color: #ff993c;
+  margin: 2px;
+  :hover {
+    background-color: #ff993c ;
+    color: white !important;
+  }
+`;
+export const ButtonFilter = styled(Button)`
+  background-color: white;
+  border: 2px solid #ff993c !important;
+  font-weight: bold;
+  color: #ff993c;
 
   :hover {
-    background-color: white;
-    color: #ff993c !important;
+    background-color: #ff993c ;
+    color: white !important;
   }
 `;
 export const SubmitButton = styled(Button)`
@@ -136,10 +155,68 @@ export const SubmitButton = styled(Button)`
   }
 `;
 export const ModalCustom = styled(Modal)`
+  display: flex;
+`;
+export const SearchCustom = styled(Search)`
   /* display: flex; */
-  position: "absolute";
-  background: #ffff;
-  width: 30%;
+  /* width: 30%; */
+
+`;
+export const BadgeSuccess = styled(Badge)`
+  /* display: flex; */
+  background: #DEF7E0;
   justify-content: center;
   align-items: center;
+  padding: 5px;
+  border: 1px solid #03AC00;
+  border-radius: 4px;
+`;
+export const BadgeError = styled(Badge)`
+  /* display: flex; */
+  background: #F8EBE8;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #FD5959;
+  border-radius: 4px;
+`;
+export const BadgeDefault = styled(Badge)`
+  /* display: flex; */
+  background: #EAF1F8;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #919DBA;
+  border-radius: 4px;
+`;
+export const ACustom = styled.a`
+  text-decoration: none;
+  color: #1E0D03;
+  padding-right: 1rem;
+  :active{
+    color: #FF993C;
+    text-decoration: underline;
+
+  }
+
+`;
+
+export const FilterForm = styled.div`
+margin: 1rem;
+margin-top: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+export const CheckboxCustom = styled(Checkbox)`
+  display: flex;
+`;
+export const DivCheckBox = styled.div`
+  display: flex;
+  
+`;
+export const DivDateTime = styled.div`
+  display: flex;
+  
 `;

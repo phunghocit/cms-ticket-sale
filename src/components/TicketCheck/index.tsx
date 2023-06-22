@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableTicketCheck from "./Table/TableTicketCheck";
 import SearchBox from "../SearchBox";
-import { ButtonCreate } from "../Styles/styles";
+import { ACustom, ButtonCreate, ButtonFile, Headbar } from "../Styles/styles";
 import { Col, Input, Row } from "antd";
 import Filters from "./Filters";
 import { useSelector } from "react-redux";
@@ -70,18 +70,6 @@ const TicketCheck = () => {
 
   return (
     <div>
-      <a href="#" onClick={changOptions}>
-        Gói gia đình
-      </a>
-      <a href="#" onClick={changOptions1}>
-        Gói sự kiện
-      </a>
-      <Search
-        placeholder="Nhập số vé"
-        value={searchText}
-        onChange={handleSearchTextChange}
-      />
-      <ButtonCreate>Xuất file(.csv)</ButtonCreate>
       <Row>
         <Col span={6} push={18}>
           <Filters
@@ -91,6 +79,24 @@ const TicketCheck = () => {
           />
         </Col>
         <Col span={18} pull={6}>
+          <ACustom href="#" onClick={changOptions}>
+            Gói gia đình
+          </ACustom>
+          <ACustom href="#" onClick={changOptions1}>
+            Gói sự kiện
+          </ACustom>
+          <Headbar>
+            <div>
+              <Search
+                placeholder="Nhập số vé"
+                value={searchText}
+                onChange={handleSearchTextChange}
+              />
+            </div>
+            <div>
+              <ButtonFile>Xuất file(.csv)</ButtonFile>
+            </div>
+          </Headbar>
           <TableTicketCheck
             loading={loading}
             options={options}

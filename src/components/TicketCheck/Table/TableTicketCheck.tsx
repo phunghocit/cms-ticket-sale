@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   Select,
+  Tooltip,
 } from "antd";
 import {
   TableCustom,
@@ -48,6 +49,7 @@ const TableTicketCheck = ({
       title: "STT",
       dataIndex: "stt",
       key: "stt",
+      width: 60,
     },
     {
       title: "Số vé",
@@ -58,6 +60,15 @@ const TableTicketCheck = ({
       title: "Tên sự kiện",
       dataIndex: "nameevent",
       key: "nameevent",
+      width: 250,
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (item:any) => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
     },
     {
       title: "Ngày sử dụng",
