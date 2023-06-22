@@ -150,24 +150,26 @@ const ServicePack = () => {
   return (
     <div>
       <Headbar>
-      <Search
+        <div>
+        <Search
         placeholder="Nhập mã gói vé"
         value={searchText}
         onChange={handleSearchTextChange}
       />
+        </div>
+        <div>
         <ButtonCreate onClick={Create}>Tạo</ButtonCreate>
-
         <ButtonFile>Xuất file(.csv)</ButtonFile>
-
         <ButtonCreate onClick={onCreate}>Thêm gói vé</ButtonCreate>
-        <ModalFormServicePack
+        </div>
+      </Headbar>
+      <ModalFormServicePack
           formData={formData}
           open={open}
           onSubmit={onSubmit}
           onCancel={onCancel}
           loading={formLoading}
         />
-      </Headbar>
       <TableFormServicePack
         servicepacklist={servicepacklist}
         onUpdate={onUpdate}
