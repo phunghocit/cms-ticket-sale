@@ -73,7 +73,9 @@ const FilterTicketManagement = ({
     <Modal
       confirmLoading={loading}
       footer={null}
+      open={open}
       title={"Lọc vé"}
+      closable={false}
     >
       <FormCustom form={form} layout="vertical">
         <Form.Item label="Lọc theo ngày" name="time">

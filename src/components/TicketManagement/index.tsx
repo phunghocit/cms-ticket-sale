@@ -24,6 +24,7 @@ import DetailTicketManagement from "./DetailTicketManagement";
 import filtersTicketSlice from "./Filter/filtersTicketSlice";
 import filter from "../../shared/icon/VectorFilter.png";
 import { NavLink } from "react-router-dom";
+import { ticket } from "../interface";
 
 const { Search } = Input;
 
@@ -43,9 +44,9 @@ const TicketManagement = () => {
   useEffect(() => {
     dispatch(fetchTickets("tickets"));
   }, []);
-  let ticketList1: any = []; // event
-  let ticketList2: any = []; //family
-  ticketList.forEach((tiket: any) => {
+  let ticketList1: ticket[] = []; // event
+  let ticketList2: ticket[] = []; //family
+  ticketList.forEach((tiket: ticket) => {
     if (tiket.nameevent != "") {
       ticketList1.push({ ...tiket });
     } else {
@@ -77,7 +78,7 @@ const TicketManagement = () => {
     dispatch(filtersTicketSlice.actions.statusFilterChange(data[1]));
     dispatch(filtersTicketSlice.actions.gateFilterChange(data[2]));
   };
-  const onSubmitEdit = (id: any, data: any) => {
+  const onSubmitEdit = (id: string, data: never[]) => {
     const NewDeadline = { deadline: data, TicketId: id };
     console.log(NewDeadline);
 
@@ -93,7 +94,7 @@ const TicketManagement = () => {
   const onFilter = () => {
     setOpen(true);
   };
-  const onEdit = (id: any) => {
+  const onEdit = (id: string) => {
     const data = ticketList.find((ticket: any) => ticket.id === id);
     console.log(data);
     setFormDataEdit(data);

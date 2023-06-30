@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+
 import { Title } from "../../../layouts/styles";
-import { DatePicker, Descriptions, Form, Input, Modal } from "antd";
+import { Descriptions, Form, Input, Modal } from "antd";
+import form from "antd/es/form";
 interface Props {
-  open?: any;
+  open?: boolean;
   onSubmit?: any;
   loading?: any;
   onCancel?: any;
@@ -15,12 +17,19 @@ const DetailTicketManagement = ({
   loading,
   onCancel,
 }: Props) => {
+  const [form] = Form.useForm();
   const [data, setData] = useState();
-
+  useEffect(()=>{
+    if (!open) {
+      form.resetFields();
+    }
+    form.setFieldsValue(formData);
+  },[open])
   const onCreate = async () => {
     console.log(data);
 
     onSubmit(formData.ticketId, data);
+    
   };
 
   const onChange = (e: any) => {
@@ -52,13 +61,19 @@ const DetailTicketManagement = ({
           </Descriptions.Item>
         )}
         <Descriptions.Item label="Hạn sử dụng">
+          <Form form={form} layout="vertical">
+            <Form.Item
+            name='deadline'>
           <Input
             type="date"
             name="deadline"
             onChange={onChange}
-            formTarget="DD MM YYYY"
-            defaultValue={formData.deadline}
+            // value={data}
           />
+            </Form.Item>
+
+          </Form>
+
         </Descriptions.Item>
       </Descriptions>
     </Modal>

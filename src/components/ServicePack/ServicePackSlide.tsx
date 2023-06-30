@@ -3,14 +3,11 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
   getDocs,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase-config";
-import { message } from "antd";
-import { v4 as uuidv4 } from "uuid";
-import { ramdomcode } from "../randomcode";
+import { servicepack } from "../interface";
 const ServicePackSlide = createSlice({
   name: "servicepacklist",
   initialState: { status: "idle", servicepacks: [],searchName: "" },
@@ -61,10 +58,8 @@ export const fetchServicePack = createAsyncThunk(
 
 export const addNewServicePack = createAsyncThunk(
   "servicepacklist/addNewServicePack",
-  async (data: any) => {
+  async (data: servicepack) => {
     console.log(data);
-
-    // console.log(`${data.deadlinetime.hour()}:${data.deadlinetime.minute()}:${data.deadlinetime.second()} `);
     const rest = await addDoc(collection(db, "servicepacks"), {
       // code: uuidv4().slice(0, 12),
       code: data.code,
@@ -78,14 +73,13 @@ export const addNewServicePack = createAsyncThunk(
       quantity: data.quantity,
       status: data.status,
     });
-    console.log(rest);
-    // console.log({ data });
+    // console.log(rest);
     return data;
   }
 );
 export const updateServicePack = createAsyncThunk(
   "servicepacklist/updateServicePack",
-  async (data: any) => {
+  async (data: servicepack) => {
     console.log(data.ServiceId);
 
     const res = await updateDoc(doc(db, "servicepacks", `${data.ServiceId}`), {

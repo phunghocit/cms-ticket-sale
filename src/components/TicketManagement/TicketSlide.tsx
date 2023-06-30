@@ -49,7 +49,7 @@ export const editTickets = createAsyncThunk(
     console.log(data.deadline, data.TicketId);
 
     const res = await updateDoc(doc(db, "tickets", `${data.TicketId}`), {
-      deadline: CONVERT(data.deadline),
+      deadline: data.deadline,
     });
     console.log(res);
 

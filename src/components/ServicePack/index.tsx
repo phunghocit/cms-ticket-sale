@@ -17,6 +17,8 @@ import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase-config";
 import { CONVERT } from "../convertDate";
 import { Input } from "antd";
+import { servicepack } from "../interface";
+
 const DEFAULT_MODAL = {
   code: "",
   name: "",
@@ -24,16 +26,16 @@ const DEFAULT_MODAL = {
   starttime: "",
   deadlinedate: "",
   deadlinetime: "",
-  price: "",
-  pricecombo: "",
-  quantity: "",
-  status: "",
+  price: 0,
+  pricecombo: 0,
+  quantity: 0,
+  status: true,
 };
 const { Search } = Input;
 
 const ServicePack = () => {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState<any>(DEFAULT_MODAL);
+  const [formData, setFormData] = useState<servicepack>(DEFAULT_MODAL);
   const [searchText, setSearchText] = useState("");
   const [formLoading, setFormLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -81,7 +83,7 @@ const ServicePack = () => {
     setOpen(false);
     setFormData(DEFAULT_MODAL);
   };
-  const Create = async () => {
+  const Create = async () => { //Tạo sẵn db trên firebase để đỡ phải nhập thủ công
     const rest = await addDoc(collection(db, "tickets"), {
       // code: `ALT${ramdomcode(8)}`,
       // datesell: "11/06/2023",
@@ -96,33 +98,34 @@ const ServicePack = () => {
       // code: `ALT${ramdomcode(8)}`,
       // datesell: "11/06/2023",
       // dateused:"",
-      // deadline:"25/06/2023",
+      // deadline:"25/07/2023",
       // gate:"",
       // id:ramdomcode(12),
-      // nameevent:"Hội chợ triển lãm 2023",
+      // nameevent:"",
+      // // Hội chợ triển lãm 2023
       // statuscheck: false,
       // type: "Vé cổng",
 
       // code: `ALT${ramdomcode(8)}`,
-      // datesell: "2023-06-11",
+      // datesell: "2023-06-28",
       // dateused:"",
-      // deadline:"2023-06-25",
+      // deadline:"2023-07-22",
       // gate:"",
       // id:ramdomcode(12),
       // nameevent:"",
       // statuscheck: false,
       // type: "Vé cổng",
 
-      code: `ALT${ramdomcode(8)}`,
-      datesell: "2023-06-11",
-      dateused: "2023-06-18",
-      deadline: "2023-06-18",
-      gate: "Cổng 4",
+      code:`ALT${ramdomcode(8)}`,
+      datesell:"2023-06-30",
+      dateused:"2023-06-30",
+      deadline:"2023-08-20",
+      gate:"",
       id: ramdomcode(12),
-      nameevent: "",
-      statusused: "Đã sử dụng",
-      statuscheck: true,
-      type: "Vé cổng",
+      nameevent:"Hội chợ triển lãm hoa 2023",
+      // statusused: "Chưa sử dụng",
+      statuscheck:false,
+      type:"Vé cổng",
     });
   };
   const onCreate = () => {
@@ -131,11 +134,11 @@ const ServicePack = () => {
   const onUpdate = async (id: any) => {
     // const res = await getDoc(doc(db, "servicepacks",`${id}`))
     const data = servicepacklist.find(
-      (servicepack: any) => servicepack.id === id
+      (servicepack: servicepack) => servicepack.id === id
     );
     console.log(data);
 
-    setFormData(data);
+    setFormData(data||DEFAULT_MODAL);
 
     setOpen(true);
   };
@@ -143,9 +146,9 @@ const ServicePack = () => {
     setOpen(false);
     setFormData(DEFAULT_MODAL);
   };
-  const handleSearchTextChange = (e: any) => {
-    setSearchText(e.target.value);
-    dispatch(ServicePackSlide.actions.searchFilterChange(e.target.value));
+  const handleSearchTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchText(e.currentTarget.value);
+    dispatch(ServicePackSlide.actions.searchFilterChange(e.currentTarget.value));
   };
   return (
     <div>

@@ -3,36 +3,27 @@ import { createSelector } from "@reduxjs/toolkit";
 import React from "react";
 import { CONVERT } from "../components/convertDate";
 import { elements } from "chart.js";
-interface ticket {
-  code: string;
-  datesell: string;
-  dateused: string;
-  deadline: string;
-  gate: number;
-  id: string;
-  nameevent: string;
-  statuscheck: boolean;
-  type: string;
-}
+import { RootState } from "./store";
+import { servicepack, ticket } from "../components/interface";
 //data tickets
-export const ticketListSelector = (state: any) => state.ticketList.tickets;
-
+export const ticketListSelector = (state: any) => state.ticketList.tickets ;
+// state.ticketList.tickets
 //filter all coponent by number ticket
-export const searchComponentSelector = (state: any) =>
+export const searchComponentSelector = (state: RootState) =>
   state.filtersComponent.search;
 //check ticket management
-export const dateSelector = (state: any) => state.filterticket.date;
-export const statusSelector = (state: any) => state.filterticket.status;
-export const gateSelector = (state: any) => state.filterticket.gate;
+export const dateSelector = (state: RootState) => state.filterticket.date;
+export const statusSelector = (state: RootState) => state.filterticket.status;
+export const gateSelector = (state: RootState) => state.filterticket.gate;
 
 //check ticket
-export const searchNameSelector = (state: any) => state.filters.searchName;
-export const filterStatusSelector = (state: any) => state.filters.status;
-export const filterDateSelector = (state: any) => state.filters.date;
+export const searchNameSelector = (state: RootState) => state.filters.searchName;
+export const filterStatusSelector = (state: RootState) => state.filters.status;
+export const filterDateSelector = (state: RootState) => state.filters.date;
 //servicePack
-export const servicePackListSelector = (state: any) =>
+export const servicePackListSelector = (state: RootState) =>
   state.servicepacklist.servicepacks;
-  export const searchServiceSelector = (state: any) =>
+  export const searchServiceSelector = (state: RootState) =>
   state.servicepacklist.searchName;
 export const ticketsRemainingSelector = createSelector(
   ticketListSelector,
@@ -40,11 +31,11 @@ export const ticketsRemainingSelector = createSelector(
   dateSelector,
   statusSelector,
   gateSelector,
-  (ticketList: any, searchText: any, date: any, status: any, gate: any) => {
-    console.log(status);
-    ticketList.filter((ticket: any) => {
-      console.log(status.length ? status.includes(ticket.statusused) : ticket);
-    });
+  (ticketList: never[], searchText: string, date: string[], status: string[], gate: string[]|any) => {
+    // console.log(status);
+    // ticketList.filter((ticket: ticket) => {
+    //   console.log(status.length ? status.includes(ticket.statusused) : ticket);
+    // });
     const checkStatusTicket = (item: ticket) => {
       const today = Date();
       if (item.dateused != "") {
@@ -75,7 +66,7 @@ export const ticketsRemainingSelector = createSelector(
         return "Cổng 5";
       }
     };
-    return ticketList.filter((ticket: any) => {
+    return ticketList.filter((ticket: ticket) => {
       // console.log(ticket.statusused);
 
       return (
@@ -97,15 +88,15 @@ export const ticketsSelector = createSelector(
   filterStatusSelector,
   filterDateSelector,
   (
-    ticketList: any,
-    searchText: any,
-    searchName: any,
-    status: any,
-    date: any
+    ticketList: never[],
+    searchText: string,
+    searchName: string,
+    status: string,
+    date: never[]|any,
   ) => {
     console.log(status);
     console.log(searchName);
-    return ticketList.filter((ticket: any) => {
+    return ticketList.filter((ticket: ticket) => {
       if (status === "All") {
         return (
           (date.length > 0
@@ -132,8 +123,8 @@ export const ticketsSelector = createSelector(
 export const servicepackRemainingSelector = createSelector(
   servicePackListSelector,
   searchServiceSelector,
-  (servicepacklist: any,searchName:any) => {
-    return servicepacklist.filter((service: any) => {
+  (servicepacklist: never[],searchName:string) => {
+    return servicepacklist.filter((service: servicepack) => {
       return service.code.includes(searchName)
     })
   }

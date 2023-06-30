@@ -28,10 +28,10 @@ import { CONVERT } from "../../convertDate";
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ["Đã đối soát", "Chưa đối soát"];
 interface Props {
-  options?: any;
-  loading?: any;
-  ticketList1?: any;
-  ticketList2?: any;
+  options?: number;
+  loading?: boolean;
+  ticketList1?: [];
+  ticketList2?: [];
 }
 const TableTicketCheck = ({
   options,

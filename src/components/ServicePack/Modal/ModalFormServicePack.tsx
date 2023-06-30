@@ -100,8 +100,7 @@ const ModalFormServicePack = ({
           </Form.Item>
         )}
         <DivDateTime>
-          
-        <Form.Item
+          <Form.Item
           label="Ngày áp dụng"
           name="startdate"
           rules={[{ required: true, message: "Ngày áp dụng là bắt buộc!" }]}
@@ -115,6 +114,7 @@ const ModalFormServicePack = ({
         >
           <Input placeholder="hh-mm-ss" type="time" />
         </Form.Item>
+
 
         <Form.Item
           label="Ngày hết hạn"
@@ -139,7 +139,6 @@ const ModalFormServicePack = ({
           label="Giá vé áp dụng"
 
         >
-
         <CheckboxCustom onChange={onChange}>
           <DivCheckBox>
             Vé lẻ (vnđ/vé) với giá

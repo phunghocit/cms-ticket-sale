@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { BadgeDefault, BadgeError, BadgeSuccess, ButtonAction, ButtonCreate, TableCustom } from "../../Styles/styles";
-import SearchBox from "../../SearchBox";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase/firebase-config";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  ticketListSelector,
-  ticketsRemainingSelector,
-} from "../../../redux/selectors";
-import { fetchTickets } from "../TicketSlide";
-import { useAppDispatch } from "../../../hook/redux";
+  BadgeDefault,
+  BadgeError,
+  BadgeSuccess,
+  TableCustom,
+} from "../../Styles/styles";
+import { useLocation, useNavigate } from "react-router-dom";
 import edit from "../../../shared/icon/Vector.png";
 import { CONVERT } from "../../convertDate";
 import { Tooltip } from "antd";
+import { ticket } from "../../interface";
 
 interface Props {
-  options?: any;
-  loading?: any;
-  ticketList1?: any;
-  ticketList2?: any;
+  options?: number;
+  loading?: boolean;
+  ticketList1?: ticket[];
+  ticketList2?: ticket[];
   onEdit?: any;
 }
 const TableTicketManagement = ({
@@ -31,9 +26,6 @@ const TableTicketManagement = ({
 }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
   let count = 1;
   const columns = [
     {
@@ -49,7 +41,6 @@ const TableTicketManagement = ({
       title: "Booking code",
       dataIndex: "code",
       key: "code",
-      
     },
     {
       title: "Số vé",
@@ -64,7 +55,7 @@ const TableTicketManagement = ({
       ellipsis: {
         showTitle: false,
       },
-      render: (item:any) => (
+      render: (item: any) => (
         <Tooltip placement="topLeft" title={item}>
           {item}
         </Tooltip>
@@ -77,21 +68,20 @@ const TableTicketManagement = ({
       width: 150,
 
       render: (_: any, item: any) => {
-        
         const today = Date();
 
-        console.log(CONVERT(today));
+        // console.log(CONVERT(today));
         if (item.dateused != "") {
-          return <BadgeDefault status="default" text="Đã sử dụng"/>;
+          return <BadgeDefault status="default" text="Đã sử dụng" />;
         } else if (
           item.dateused === "" &&
           CONVERT(item.deadline) < CONVERT(today)
         ) {
           console.log(Date.now());
 
-          return <BadgeError status="error" text="Hết hạn"/>;
+          return <BadgeError status="error" text="Hết hạn" />;
         } else {
-          return <BadgeSuccess status="success" text="Chưa sử dụng"/>;
+          return <BadgeSuccess status="success" text="Chưa sử dụng" />;
         }
       },
     },
@@ -124,13 +114,12 @@ const TableTicketManagement = ({
       dataIndex: "gate",
       key: "gate",
       width: 150,
-      
     },
     {
       title: "",
       dataIndex: "status",
       key: "status",
-      with:80,
+      with: 80,
       render: (_: any, item: any) => {
         // if (item.statusused==='unused') {
         const today = Date();
@@ -177,18 +166,28 @@ const TableTicketManagement = ({
       key: "",
       render: (_: any, item: any) => {
         const today = Date();
+        console.log(CONVERT(today));
+        console.log(CONVERT(item.deadline));
+        if (`${CONVERT(item.deadline)}` < `${CONVERT(today)}`) {
+        console.log(true);
+          
+        }else{
+        console.log(false);
+
+        }
+        console.log("-----------");
 
         if (item.dateused != "") {
-          return <BadgeDefault status="default" text="Đã sử dụng"/>;
+          return <BadgeDefault status="default" text="Đã sử dụng" />;
         } else if (
           item.dateused === "" &&
           CONVERT(item.deadline) < CONVERT(today)
         ) {
-          console.log(Date.now());
-
-          return <BadgeError status="error" text="Hết hạn"/>;
-        } else {
-          return <BadgeSuccess status="success" text="Chưa sử dụng"/>;
+          return <BadgeError status="error" text="Hết hạn" />;
+        } else if(
+          item.dateused === "" && CONVERT(item.deadline) >= CONVERT(today)
+        ) {
+          return <BadgeSuccess status="success" text="Chưa sử dụng" />;
         }
       },
     },

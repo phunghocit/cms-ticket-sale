@@ -9,13 +9,19 @@ import {
   Form,
   Checkbox,
   DatePicker,
+  RadioChangeEvent,
 } from "antd";
 import { useState } from "react";
 import { useAppDispatch } from "../../../hook/redux";
 
 // import { priorityFilterChange, searchFilterChange, statusFilterChange } from '../../redux/actions';
 // import filtersSlice from './filtersSlice';
-import { ButtonFilter, FilterForm, FormCustom, SubmitButton } from "../../Styles/styles";
+import {
+  ButtonFilter,
+  FilterForm,
+  FormCustom,
+  SubmitButton,
+} from "../../Styles/styles";
 import { useNavigate } from "react-router-dom";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
@@ -43,11 +49,11 @@ const Filters = ({ options, CreateFilter }: Props) => {
   console.log(filterStatus);
   console.log(date);
 
-  const handleSearchTextChange = (e: any) => {
-    setSearchName(e.target.value);
+  const handleSearchTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchName(e.currentTarget.value);
   };
 
-  const handleStatusChange = (e: any) => {
+  const handleStatusChange = (e: RadioChangeEvent) => {
     setFilterStatus(e.target.value);
   };
 
@@ -58,7 +64,12 @@ const Filters = ({ options, CreateFilter }: Props) => {
     <FilterForm>
       <FormCustom form={form} layout="vertical">
         <Typography.Paragraph
-          style={{ fontWeight: "bold", marginBottom: 3, marginTop: 10 }}
+          style={{
+            fontSize: 25,
+            fontWeight: "bold",
+            marginBottom: 3,
+            marginTop: 10,
+          }}
         >
           Lọc vé
         </Typography.Paragraph>
@@ -77,9 +88,11 @@ const Filters = ({ options, CreateFilter }: Props) => {
           style={{ width: "85%" }}
         >
           <Radio.Group value={filterStatus} onChange={handleStatusChange}>
-            <Radio value="All">Tất cả</Radio>
-            <Radio value="Checked">Đã đối soát</Radio>
-            <Radio value="Uncheck">Chưa đối soát</Radio>
+            <div style={{ display: "inline" }}>
+              <Radio value="All">Tất cả</Radio>
+              <Radio value="Checked">Đã đối soát</Radio>
+              <Radio value="Uncheck">Chưa đối soát</Radio>
+            </div>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Loại vé" name="typeticket" style={{ width: "85%" }}>
@@ -105,7 +118,6 @@ const Filters = ({ options, CreateFilter }: Props) => {
             }}
           />
         </Form.Item>
-
         <ButtonFilter onClick={handleSubmit}>Lọc</ButtonFilter>
       </FormCustom>
     </FilterForm>
