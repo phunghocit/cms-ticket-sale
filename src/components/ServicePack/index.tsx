@@ -83,51 +83,51 @@ const ServicePack = () => {
     setOpen(false);
     setFormData(DEFAULT_MODAL);
   };
-  const Create = async () => { //Tạo sẵn db trên firebase để đỡ phải nhập thủ công
-    const rest = await addDoc(collection(db, "tickets"), {
-      // code: `ALT${ramdomcode(8)}`,
-      // datesell: "11/06/2023",
-      // dateused:"",
-      // deadline:"25/06/2023",
-      // gate:"",
-      // id:ramdomcode(12),
-      // nameevent:"Hội chợ triển lãm tiêu dùng 2023",
-      // statuscheck: false,
-      // type: "Vé cổng",
+  // const Create = async () => { //Tạo sẵn db trên firebase để đỡ phải nhập thủ công
+  //   const rest = await addDoc(collection(db, "tickets"), {
+  //     // code: `ALT${ramdomcode(8)}`,
+  //     // datesell: "11/06/2023",
+  //     // dateused:"",
+  //     // deadline:"25/06/2023",
+  //     // gate:"",
+  //     // id:ramdomcode(12),
+  //     // nameevent:"Hội chợ triển lãm tiêu dùng 2023",
+  //     // statuscheck: false,
+  //     // type: "Vé cổng",
 
-      // code: `ALT${ramdomcode(8)}`,
-      // datesell: "11/06/2023",
-      // dateused:"",
-      // deadline:"25/07/2023",
-      // gate:"",
-      // id:ramdomcode(12),
-      // nameevent:"",
-      // // Hội chợ triển lãm 2023
-      // statuscheck: false,
-      // type: "Vé cổng",
+  //     // code: `ALT${ramdomcode(8)}`,
+  //     // datesell: "11/06/2023",
+  //     // dateused:"",
+  //     // deadline:"25/07/2023",
+  //     // gate:"",
+  //     // id:ramdomcode(12),
+  //     // nameevent:"",
+  //     // // Hội chợ triển lãm 2023
+  //     // statuscheck: false,
+  //     // type: "Vé cổng",
 
-      // code: `ALT${ramdomcode(8)}`,
-      // datesell: "2023-06-28",
-      // dateused:"",
-      // deadline:"2023-07-22",
-      // gate:"",
-      // id:ramdomcode(12),
-      // nameevent:"",
-      // statuscheck: false,
-      // type: "Vé cổng",
+  //     // code: `ALT${ramdomcode(8)}`,
+  //     // datesell: "2023-06-28",
+  //     // dateused:"",
+  //     // deadline:"2023-07-22",
+  //     // gate:"",
+  //     // id:ramdomcode(12),
+  //     // nameevent:"",
+  //     // statuscheck: false,
+  //     // type: "Vé cổng",
 
-      code:`ALT${ramdomcode(8)}`,
-      datesell:"2023-06-30",
-      dateused:"2023-06-30",
-      deadline:"2023-08-20",
-      gate:"",
-      id: ramdomcode(12),
-      nameevent:"Hội chợ triển lãm hoa 2023",
-      // statusused: "Chưa sử dụng",
-      statuscheck:false,
-      type:"Vé cổng",
-    });
-  };
+  //     code:`ALT${ramdomcode(8)}`,
+  //     datesell:"2023-06-30",
+  //     dateused:"2023-06-30",
+  //     deadline:"2023-08-20",
+  //     gate:"",
+  //     id: ramdomcode(12),
+  //     nameevent:"Hội chợ triển lãm hoa 2023",
+  //     // statusused: "Chưa sử dụng",
+  //     statuscheck:false,
+  //     type:"Vé cổng",
+  //   });
+  // };
   const onCreate = () => {
     setOpen(true);
   };
@@ -161,7 +161,7 @@ const ServicePack = () => {
       />
         </div>
         <div>
-        <ButtonCreate onClick={Create}>Tạo</ButtonCreate>
+        {/* <ButtonCreate onClick={Create}>Tạo</ButtonCreate> */}
         <ButtonFile>Xuất file(.csv)</ButtonFile>
         <ButtonCreate onClick={onCreate}>Thêm gói vé</ButtonCreate>
         </div>
